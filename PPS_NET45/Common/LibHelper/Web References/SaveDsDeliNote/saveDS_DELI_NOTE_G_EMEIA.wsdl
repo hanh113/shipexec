@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://EDI-UMISMWSStag.luxshare.com.cn/ICT_WS.pps.DS:saveDS_DELI_NOTE_G_EMEIA" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapjms="http://www.w3.org/2010/soapjms/" name="saveDS_DELI_NOTE_G_EMEIA" targetNamespace="http://EDI-UMISMWSStag.luxshare.com.cn/ICT_WS.pps.DS:saveDS_DELI_NOTE_G_EMEIA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://EDI-UMISMWSStag.luxshare.com.cn/ICT_WS.pps.DS:saveDS_DELI_NOTE_G_EMEIA">
+      <xsd:element name="saveDS_DELI_NOTE_G_EMEIA" type="tns:saveDS_DELI_NOTE_G_EMEIA" />
+      <xsd:complexType name="saveDS_DELI_NOTE_G_EMEIA">
+        <xsd:sequence>
+          <xsd:element name="shipmentID" nillable="true" type="xsd:string" />
+          <xsd:element name="acDN" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="saveDS_DELI_NOTE_G_EMEIA_PortType_saveDS_DELI_NOTE_G_EMEIA">
+    <wsdl:part name="parameters" element="tns:saveDS_DELI_NOTE_G_EMEIA" />
+  </wsdl:message>
+  <wsdl:portType name="saveDS_DELI_NOTE_G_EMEIA_PortType">
+    <wsdl:operation name="saveDS_DELI_NOTE_G_EMEIA">
+      <wsdl:input message="tns:saveDS_DELI_NOTE_G_EMEIA_PortType_saveDS_DELI_NOTE_G_EMEIA" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Binder" type="tns:saveDS_DELI_NOTE_G_EMEIA_PortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="saveDS_DELI_NOTE_G_EMEIA">
+      <soap:operation soapAction="ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Binder_saveDS_DELI_NOTE_G_EMEIA" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ICT_WS.pps.DS.saveDS_DELI_NOTE_G_EMEIA">
+    <wsdl:port name="ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Port" binding="tns:ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Binder">
+      <soap:address location="http://10.12.40.249:5556/ws/ICT_WS.pps.DS:saveDS_DELI_NOTE_G_EMEIA/ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Port" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

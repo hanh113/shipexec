@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A4246FBD-E2AB-412F-8C90-1D3CCFDBC335}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>wmsReport</RootNamespace>
+    <AssemblyName>wmsReport</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\PPS_PROD\Shipping\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ClientUtils, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\ClientUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="CommonControl, Version=1.0.0.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\Shipping\CommonControl.dll</HintPath>
+    </Reference>
+    <Reference Include="CRReport, Version=3.0.5.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\CRReport.dll</HintPath>
+    </Reference>
+    <Reference Include="LibHelper, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\LibHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\MES\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Reverse, Version=1.0.1.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_PROD\Reverse.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\..\..\..\..\..\PPS_TEST\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\..\..\..\..\..\PPS_TEST\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonSQL.cs" />
+    <Compile Include="Core\Controller.cs" />
+    <Compile Include="DataGetWays\GetDatas.cs" />
+    <Compile Include="Entitys\QueryInfo.cs" />
+    <Compile Include="Forms\CreateDeliveryNoteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateDeliveryNoteForm.Designer.cs">
+      <DependentUpon>CreateDeliveryNoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entitys\ShipmentInfo.cs" />
+    <Compile Include="Entitys\T940UnicodeInfo.cs" />
+    <Compile Include="Forms\FastSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FastSearchForm.Designer.cs">
+      <DependentUpon>FastSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\formTrolleyMove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\formTrolleyMove.Designer.cs">
+      <DependentUpon>formTrolleyMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fPpartTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fPpartTransfer.Designer.cs">
+      <DependentUpon>fPpartTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmEartipsStockIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmEartipsStockIn.Designer.cs">
+      <DependentUpon>FrmEartipsStockIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmPPSHOLD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmPPSHOLD.Designer.cs">
+      <DependentUpon>FrmPPSHOLD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmPPSOUT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmPPSOUT.Designer.cs">
+      <DependentUpon>FrmPPSOUT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmSNSingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmSNSingle.Designer.cs">
+      <DependentUpon>FrmSNSingle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FrmTroStockIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmTroStockIn.Designer.cs">
+      <DependentUpon>FrmTroStockIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fWMSPpartCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fWMSPpartCheck.Designer.cs">
+      <DependentUpon>fWMSPpartCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fWMSQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fWMSQuery.Designer.cs">
+      <DependentUpon>fWMSQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StockTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StockTransfer.Designer.cs">
+      <DependentUpon>StockTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SajetCommon.cs" />
+    <Compile Include="Forms\ShowPassStationLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShowPassStationLog.Designer.cs">
+      <DependentUpon>ShowPassStationLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\CreateExcel.cs" />
+    <Compile Include="Entitys\ExecuteResult.cs" />
+    <Compile Include="Forms\fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fWMSCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fWMSCheck.Designer.cs">
+      <DependentUpon>fWMSCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entitys\PrintInfo.cs" />
+    <Compile Include="Utils\PrintLabel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\ReportQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReportQuery.Designer.cs">
+      <DependentUpon>ReportQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Transfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Transfer.Designer.cs">
+      <DependentUpon>Transfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\TransferDataTable.cs" />
+    <Compile Include="WebApi\CallApi.cs" />
+    <Compile Include="WebApi\OrderModel.cs" />
+    <Compile Include="WMSBLL.cs" />
+    <Compile Include="WMSDLL.cs" />
+    <Compile Include="Forms\ZF_CheckOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ZF_CheckOut.Designer.cs">
+      <DependentUpon>ZF_CheckOut.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\CreateDeliveryNoteForm.resx">
+      <DependentUpon>CreateDeliveryNoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FastSearchForm.resx">
+      <DependentUpon>FastSearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\formTrolleyMove.resx">
+      <DependentUpon>formTrolleyMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fPpartTransfer.resx">
+      <DependentUpon>fPpartTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmEartipsStockIn.resx">
+      <DependentUpon>FrmEartipsStockIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPPSHOLD.resx">
+      <DependentUpon>FrmPPSHOLD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmPPSOUT.resx">
+      <DependentUpon>FrmPPSOUT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmSNSingle.resx">
+      <DependentUpon>FrmSNSingle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmTroStockIn.resx">
+      <DependentUpon>FrmTroStockIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fWMSCheck.resx">
+      <DependentUpon>fWMSCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fWMSPpartCheck.resx">
+      <DependentUpon>fWMSPpartCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fWMSQuery.resx">
+      <DependentUpon>fWMSQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StockTransfer.resx">
+      <DependentUpon>StockTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Forms\ReportQuery.resx">
+      <DependentUpon>ReportQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowPassStationLog.resx">
+      <DependentUpon>ShowPassStationLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Transfer.resx">
+      <DependentUpon>Transfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ZF_CheckOut.resx">
+      <DependentUpon>ZF_CheckOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Chroma>
+  <English>
+    <Message Name="Factory" Value="Factory" />
+    <Message Name="Line Name" Value="Line Name" />
+    <Message Name="Description" Value="Description" />
+    <Message Name="Description2" Value="Description2" />
+    <Message Name="FACTORY_NAME" Value="Factory" />
+    <Message Name="DEPARTMENT" Value="DEPARTMENT" />
+    <Message Name="SECTION" Value="SECTION" />
+    <Message Name="STAGE" Value="STAGE" />
+  </English>
+  <繁體中文>
+    <Message Name="Factory" Value="廠別" />
+    <Message Name="Line Name" Value="線別名稱" />
+    <Message Name="Description" Value="線別描述" />
+    <Message Name="Description2" Value="線別描述(2)" />
+    <Message Name="FACTORY_NAME" Value="廠別" />
+    <Message Name="Shift Name" Value="班別名稱" />
+    <Message Name="Shift Group Name" Value="班別群組名稱" />
+    <Message Name="DEPARTMENT" Value="課別" />
+    <Message Name="SECTION" Value="部別" />
+    <Message Name="STAGE" Value="製程段" />
+  </繁體中文>
+  <简体中文>
+    <Message Name="Factory" Value="厂别" />
+    <Message Name="Line Name" Value="线别名称" />
+    <Message Name="Description" Value="线别描述" />
+    <Message Name="Description2" Value="线别描述(2)" />
+    <Message Name="FACTORY_NAME" Value="厂别" />
+    <Message Name="Shift Name" Value="班别名称" />
+    <Message Name="Shift Group Name" Value="班别群组名称" />
+    <Message Name="DEPARTMENT" Value="课别" />
+    <Message Name="SECTION" Value="部别" />
+    <Message Name="STAGE" Value="制程段" />
+  </简体中文>
+</Chroma>

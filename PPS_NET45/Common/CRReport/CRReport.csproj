@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0D8E3DC0-AF54-4332-AB44-15EF770B4ABD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRReport</RootNamespace>
+    <AssemblyName>CRReport</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <OutputPath>..\..\..\..\..\..\PPS_TEST\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DotNetBarcode">
+      <HintPath>..\..\..\Packages\DotNetBarcode.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.5.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constant.cs" />
+    <Compile Include="CRform\ACHandoverManifest.cs" />
+    <Compile Include="CRform\ALetterPackingListForm.cs" />
+    <Compile Include="CRform\AmrDsShippingLabel940From.cs" />
+    <Compile Include="CRform\AMRFDCCILayoutForm.cs" />
+    <Compile Include="CRform\ChannelColumbiaForm.cs" />
+    <Compile Include="CRform\ChannelPackingListBrazil.cs" />
+    <Compile Include="CRform\ChannelPackingListCanada.cs" />
+    <Compile Include="CRform\ChannelPackingListPeru.cs" />
+    <Compile Include="CRform\ChannelPackingListUS.cs" />
+    <Compile Include="CRform\ChileChannelPackingList.cs" />
+    <Compile Include="CRform\ConsignedShipLabelForm.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutBrazil.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutCAN.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutChile.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutColumbia.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutMexico.cs" />
+    <Compile Include="CRform\ConsolAMRLayoutUSPR.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutBrazilForm.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutCanada.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutChileForm.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutCOForm.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutMexicoForm.cs" />
+    <Compile Include="CRform\ConsolCIAMRLayoutUSAndPeru.cs" />
+    <Compile Include="CRform\ConsumerPackingList613_6647_A4.cs" />
+    <Compile Include="CRform\ConsumerPackingListKorea.cs" />
+    <Compile Include="CRform\ConsumerPackingList_EMEA_G.cs" />
+    <Compile Include="CRform\ConsumerPackingList_EMEA_H.cs" />
+    <Compile Include="CRform\ConsumerPacklingList_EMEA_C.cs" />
+    <Compile Include="CRform\ConsumerPkListBilingualCanadaForm.cs" />
+    <Compile Include="CRform\D1_DeliveryNote.cs" />
+    <Compile Include="CRform\D1_DeliveryNote2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CRform\DeliveryNoteCForm.cs" />
+    <Compile Include="CRform\DeliveryNoteGForm.cs" />
+    <Compile Include="CRform\DeliveryNoteHForm.cs" />
+    <Compile Include="CRform\DirectShipLabel.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieCzechForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieDirectShipForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieHubConsignedForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieItalyForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieMITForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieNetherlandsForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieSTOForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieTurkeyForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieUAEForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieUAEFTZForm.cs" />
+    <Compile Include="CRform\EMEAOEMCommercialInvocieUKForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_DirectShipForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_INDIAForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_MITForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_RussiaForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_STOForm.cs" />
+    <Compile Include="CRform\EMEA_OEM_PK_TurkeyForm.cs" />
+    <Compile Include="CRform\EMEIAInvoiceLayoutForm.cs" />
+    <Compile Include="CRform\EMEIAPLLayoutForm.cs" />
+    <Compile Include="CRform\EMEIA_BUY_DELIVERYNOTE.cs" />
+    <Compile Include="CRform\EMEIA_MUTIL_DELIVERYNOTE.cs" />
+    <Compile Include="CRform\EMEIA_SELL_DELIVERYNOTE.cs" />
+    <Compile Include="CRform\FDAPACPackingListForm.cs" />
+    <Compile Include="CRform\FDAPACShippingInoviceForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutALLUSAndPEForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutBZForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutCANForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutCLForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutCOForm.cs" />
+    <Compile Include="CRform\FDConsolPLAMRLayoutMEXForm.cs" />
+    <Compile Include="CRform\FDHubGlobalLayoutForm.cs" />
+    <Compile Include="CRform\HandoverManifest.cs" />
+    <Compile Include="CRform\HandoverManifestDirectShip.cs" />
+    <Compile Include="CRform\HandoverManifestDS.cs" />
+    <Compile Include="CRform\HanManCRFrom.cs" />
+    <Compile Include="CRform\INDIAShipLabelForm.cs" />
+    <Compile Include="CRform\InvoiceCRFrom.cs" />
+    <Compile Include="CRform\Ltr_PkList_bilingual613_6685.cs" />
+    <Compile Include="CRform\Ltr_PkList_MEX.cs" />
+    <Compile Include="CRform\MexicoChannelPackingList.cs" />
+    <Compile Include="CRform\MITShipLabelForm.cs" />
+    <Compile Include="CRform\NewDeliveryNoteGForm.cs" />
+    <Compile Include="CRform\P1ConsumerPackingListChina.cs" />
+    <Compile Include="CRform\P1ConsumerPackingListGlobal.cs" />
+    <Compile Include="CRform\P1ConsumerPackingListHK.cs" />
+    <Compile Include="CRform\P1ConsumerPackingListJP.cs" />
+    <Compile Include="CRform\P1ConsumerPackingListTW.cs" />
+    <Compile Include="CRform\P2_ConsolPackingList.cs" />
+    <Compile Include="CRform\PackingList.cs" />
+    <Compile Include="CRform\PalletLoadingSheetForm.cs" />
+    <Compile Include="CRform\ShipLabelSTO.cs" />
+    <Compile Include="CRform\ShippingInvoiceForm.cs" />
+    <Compile Include="CRform\ThaiLandPKFormcs.cs" />
+    <Compile Include="CRform\TPIForm.cs" />
+    <Compile Include="CRMain.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SendEmail.cs" />
+    <Compile Include="Util\Util.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ClientUtils\ClientUtils.csproj">
+      <Project>{19ba5aaa-2373-4807-b207-c88c48517264}</Project>
+      <Name>ClientUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibHelper\LibHelper.csproj">
+      <Project>{504fc282-31b5-4a4f-b76f-8fbef4d9e656}</Project>
+      <Name>LibHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

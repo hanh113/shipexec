@@ -1,0 +1,32 @@
+﻿<Request>
+    <Access>
+        <Authentication user="{user}" password="{password}" />
+        <Connection application="{application}" source="{source}" />
+        <Organization name="{Organization}" />
+        <Profit name="{Profit}" />
+        <Locale language="{language}" />
+    </Access>
+    <RequestContent>
+        <Parameter>
+            <Record>
+                <Field name="ASntype" value="{asntype}"/>
+                <Field name="EDItype" value="{editype}" />
+                <Field name="SHIPMENT_ID" value="{shipment_id}" />
+            </Record>
+        </Parameter>
+        <Document>
+            <!--<RecordSet id="1">-->
+            <RecordSet>
+                <Master name="oga_file">
+                    <Record>
+                        <!--<Field name="oea10" value="{oea10}" />-->
+                        <Field name=" oea01" value="{oea01}" />
+                    </Record>
+                </Master>
+                <Detail name="ogb_file">
+                   {ogb_file} 
+                </Detail>
+            </RecordSet>
+        </Document>
+    </RequestContent>
+</Request>

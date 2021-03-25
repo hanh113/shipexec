@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6CC911B-90AC-4548-9D8A-F8D79270D115}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PTTWebServices</RootNamespace>
+    <AssemblyName>PTTWebServices</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\MES\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\DM_Doc.cs" />
+    <Compile Include="Models\DM_Ship.cs" />
+    <Compile Include="Models\DU_Doc.cs" />
+    <Compile Include="Models\M_Doc.cs" />
+    <Compile Include="Models\M_Ship.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\User_Account.cs" />
+    <Compile Include="Models\U_Doc.cs" />
+    <Compile Include="Models\U_OgaFile.cs" />
+    <Compile Include="Models\U_OgbFile.cs" />
+    <Compile Include="Models\U_OgcFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\TTWebServiceFrom\Reference.cs" />
+    <Compile Include="Service References\TTWebServiceFrom\Reference1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Shiping.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Service References\TTWebServiceFrom\configuration.svcinfo" />
+    <Content Include="Service References\TTWebServiceFrom\configuration91.svcinfo" />
+    <Content Include="Service References\TTWebServiceFrom\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Template\DMoreShip.html" />
+    <Content Include="Template\DMoreShip_Doc.html" />
+    <Content Include="Template\DUnitShip.html" />
+    <Content Include="Template\MoreShip.html" />
+    <Content Include="Template\MoreShip_Doc.html" />
+    <Content Include="Template\MoreShip_OgcFile.html" />
+    <Content Include="Template\UnitShip.html" />
+    <Content Include="Template\UnitShip_OgaFile.html" />
+    <Content Include="Template\MoreShip_OgbFile.html" />
+    <Content Include="Template\UnitShip_OgbFile.html" />
+    <Content Include="Template\UnitShip_OgcFile.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Service References\TTWebServiceFrom\TIPTOPServiceGateWay.wsdl" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

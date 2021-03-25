@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://dcs.luxshare-ict.com/WCF/LdapAd.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.WCF" />
+  <xs:import schemaLocation="http://dcs.luxshare-ict.com/WCF/LdapAd.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.Models" />
+  <xs:import schemaLocation="http://dcs.luxshare-ict.com/WCF/LdapAd.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Luxshare.DCS.Data" />
+  <xs:element name="Add">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.WCF" minOccurs="0" name="model" nillable="true" type="q1:LdapAdModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.Models" minOccurs="0" name="AddResult" nillable="true" type="q2:FlagTips" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckUserLogin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="empCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pwd" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckUserLoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Luxshare.DCS.Data" minOccurs="0" name="CheckUserLoginResult" nillable="true" type="q3:CheckUserModel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

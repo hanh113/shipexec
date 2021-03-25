@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LibHelper.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LibHelper_UpsHawb_ICT_WS_oa_getUPS_HAWB_ws" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.12.40.249:5556/ws/ICT_WS.oa:getUPS_HAWB_ws/ICT_WS_oa_getUPS_HAWB_ws_Port</Value>
+    </Setting>
+    <Setting Name="LibHelper_SaveDsDeliNote_ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.12.40.249:5556/ws/ICT_WS.pps.DS:saveDS_DELI_NOTE_G_EMEIA/ICT_WS_pps_DS_saveDS_DELI_NOTE_G_EMEIA_Port</Value>
+    </Setting>
+    <Setting Name="LibHelper_ToEdiByInfoInPick_ICT_WS_pps_DS_genShippingDocLabel" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.12.40.249:5556/ws/ICT_WS.pps.DS:genShippingDocLabel/ICT_WS_pps_DS_genShippingDocLabel_Port</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

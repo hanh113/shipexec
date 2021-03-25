@@ -1,0 +1,112 @@
+<Chroma>
+  <English>
+    <Message Name="MACHINE_CODE" Value="Machine Code" />
+    <Message Name="MACHINE_DESC" Value="Description" />
+    <Message Name="MACHINE_TYPE_NAME" Value="Machine Type" />
+    <Message Name="SMT_SIDE_NAME" Value="SMT Side" />
+    <Message Name="STAGE_NAME" Value="Stage Name" />
+    <Message Name="PROCESS_NAME" Value="Process Name" />
+    <Message Name="PDLINE_NAME" Value="Line Name" />
+    <Message Name="TERMINAL_NAME" Value="Terminal Name" />
+  </English>
+  <繁體中文>
+    <Message Name="MACHINE_CODE" Value="機台代碼" />
+    <Message Name="MACHINE_DESC" Value="機台描述" />
+    <Message Name="MACHINE_TYPE_NAME" Value="機台類型" />
+    <Message Name="SMT_SIDE_NAME" Value="SMT製程類型" />
+    <Message Name="Factory" Value="廠別" />
+    <Message Name="Production Line" Value="生產線" />
+    <Message Name="Collapse" Value="摺疊" />
+    <Message Name="Expand" Value="展開" />
+    <Message Name="Show Terminal ID" Value="顯示工作站ID" />
+    <Message Name="Process Name" Value="製程名稱" />
+    <Message Name="Terminal Name" Value="工作站名稱" />
+    <Message Name="For PC" Value="使用電腦" />
+    <Message Name="For DCN" Value="使用資料收集器" />
+    <Message Name="For ATE Link" Value="使用機台連線" />
+    <Message Name="Terminal ID" Value="工作站ID" />
+    <Message Name="Stage Name" Value="區段名稱" />
+    <Message Name="Terminal Type" Value="工作站類型" />
+    <Message Name="Machine" Value="機台" />
+    <Message Name="Machine disabled" Value="機台已停用" />
+    <Message Name="Change this Terminal to DCN" Value="變更此工作站為資料收集器" />
+    <Message Name="Change this Terminal to PC" Value="變更此工作站為電腦" />
+    <Message Name="all Terminal on this Production Line" Value="此線別下所有工作站" />
+    <Message Name="all Terminal on this Stage" Value="此區段下所有工作站" />
+    <Message Name="all Terminal on this Process" Value="此製程下所有工作站" />
+    <Message Name="this Terminal" Value="此工作站" />
+    <Message Name="Collapse All" Value="全部摺疊" />
+    <Message Name="Expand All" Value="全部展開" />
+    <Message Name="For SMT Machine" Value="使用SMT機台" />
+    <Message Name="TOP" Value="正面" />
+    <Message Name="BOTTOM" Value="反面" />
+    <Message Name="Single" Value="單面" />
+    <Message Name="Append Terminal" Value="新增工作站" />
+    <Message Name="Modify Terminal" Value="修改工作站" />
+    <Message Name="SMT Side" Value="SMT製程類型" />
+    <Message Name="SMT Machine" Value="SMT機台" />
+    <Message Name="Machine had at other Line" Value="機台已在其他線別中" />
+    <Message Name="Machine must at only one Line" Value="機台只可在一條線中" />
+    <Message Name="Side" Value="正反面" />
+    <Message Name="Please define side 1" Value="請先定義第一面" />
+    <Message Name="Machine has Side 2,also remove link" Value="機台已有第二面資料,會同時解除" />
+    <Message Name="PC" Value="電腦" />
+    <Message Name="DCN" Value="資料收集器" />
+    <Message Name="ATE Link" Value="機台連線" />
+    <Message Name="Query" Value="查詢" />
+    <Message Name="STAGE_NAME" Value="區段名稱" />
+    <Message Name="PROCESS_NAME" Value="製程名稱" />
+    <Message Name="PDLINE_NAME" Value="線別" />
+    <Message Name="TERMINAL_NAME" Value="工作站名稱" />
+  </繁體中文>
+  <简体中文>
+    <Message Name="MACHINE_CODE" Value="机台代码" />
+    <Message Name="MACHINE_DESC" Value="机台描述" />
+    <Message Name="MACHINE_TYPE_NAME" Value="机台类型" />
+    <Message Name="SMT_SIDE_NAME" Value="SMT制程类型" />
+    <Message Name="Factory" Value="厂别" />
+    <Message Name="Production Line" Value="生产线" />
+    <Message Name="Collapse" Value="摺叠" />
+    <Message Name="Expand" Value="展开" />
+    <Message Name="Show Terminal ID" Value="显示工作站ID" />
+    <Message Name="Process Name" Value="制程名称" />
+    <Message Name="Terminal Name" Value="工作站名称" />
+    <Message Name="For PC" Value="使用电脑" />
+    <Message Name="For DCN" Value="使用资料收集器" />
+    <Message Name="For ATE Link" Value="使用机台连线" />
+    <Message Name="Terminal ID" Value="工作站ID" />
+    <Message Name="Stage Name" Value="区段名称" />
+    <Message Name="Terminal Type" Value="工作站类型" />
+    <Message Name="Machine" Value="机台" />
+    <Message Name="Machine disabled" Value="机台已停用" />
+    <Message Name="Change this Terminal to DCN" Value="变更此工作站为资料收集器" />
+    <Message Name="Change this Terminal to PC" Value="变更此工作站为电脑" />
+    <Message Name="all Terminal on this Production Line" Value="此线别下所有工作站" />
+    <Message Name="all Terminal on this Stage" Value="此区段下所有工作站" />
+    <Message Name="all Terminal on this Process" Value="此制程下所有工作站" />
+    <Message Name="this Terminal" Value="此工作站" />
+    <Message Name="Collapse All" Value="全部摺叠" />
+    <Message Name="Expand All" Value="全部展开" />
+    <Message Name="For SMT Machine" Value="使用SMT机台" />
+    <Message Name="TOP" Value="正面" />
+    <Message Name="BOTTOM" Value="反面" />
+    <Message Name="Single" Value="单面" />
+    <Message Name="Append Terminal" Value="新增工作站" />
+    <Message Name="Modify Terminal" Value="修改工作站" />
+    <Message Name="SMT Side" Value="SMT制程类型" />
+    <Message Name="SMT Machine" Value="SMT机台" />
+    <Message Name="Machine had at other Line" Value="机台已在其他线别中" />
+    <Message Name="Machine must at only one Line" Value="机台只可在一条线中" />
+    <Message Name="Side" Value="正反面" />
+    <Message Name="Please define side 1" Value="请先定义第一面" />
+    <Message Name="Machine has Side 2,also remove link" Value="机台已有第二面资料,会同时解除" />
+    <Message Name="PC" Value="电脑" />
+    <Message Name="DCN" Value="资料收集器" />
+    <Message Name="ATE Link" Value="机台连线" />
+    <Message Name="Query" Value="查询" />
+    <Message Name="STAGE_NAME" Value="区段名称" />
+    <Message Name="PROCESS_NAME" Value="制程名称" />
+    <Message Name="PDLINE_NAME" Value="线别" />
+    <Message Name="TERMINAL_NAME" Value="工作站名称" />
+  </简体中文>
+</Chroma>

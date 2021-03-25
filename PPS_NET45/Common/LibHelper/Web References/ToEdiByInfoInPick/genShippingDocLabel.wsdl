@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://DG1U-ESBIS-SVR01.luxshare.com.cn/ICT_WS.pps.DS:genShippingDocLabel" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapjms="http://www.w3.org/2010/soapjms/" name="genShippingDocLabel" targetNamespace="http://DG1U-ESBIS-SVR01.luxshare.com.cn/ICT_WS.pps.DS:genShippingDocLabel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://DG1U-ESBIS-SVR01.luxshare.com.cn/ICT_WS.pps.DS:genShippingDocLabel">
+      <xsd:element name="genShippingDocLabel_ws" type="tns:genShippingDocLabel_ws" />
+      <xsd:element name="genShippingDocLabel_wsResponse" type="tns:genShippingDocLabel_wsResponse" />
+      <xsd:complexType name="genShippingDocLabel_ws">
+        <xsd:sequence>
+          <xsd:element name="SHIPMENT_ID" nillable="true" type="xsd:string" />
+          <xsd:element name="REGION" nillable="true" type="xsd:string" />
+          <xsd:element name="SHIP_TYPE" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="genShippingDocLabel_wsResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="responseString" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="string" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="genShippingDocLabel_PortType_genShippingDocLabel_wsResponse">
+    <wsdl:part name="parameters" element="tns:genShippingDocLabel_wsResponse" />
+  </wsdl:message>
+  <wsdl:message name="genShippingDocLabel_PortType_genShippingDocLabel_ws">
+    <wsdl:part name="parameters" element="tns:genShippingDocLabel_ws" />
+  </wsdl:message>
+  <wsdl:portType name="genShippingDocLabel_PortType">
+    <wsdl:operation name="genShippingDocLabel_ws">
+      <wsdl:input message="tns:genShippingDocLabel_PortType_genShippingDocLabel_ws" />
+      <wsdl:output message="tns:genShippingDocLabel_PortType_genShippingDocLabel_wsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ICT_WS_pps_DS_genShippingDocLabel_Binder" type="tns:genShippingDocLabel_PortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="genShippingDocLabel_ws">
+      <soap:operation soapAction="ICT_WS_pps_DS_genShippingDocLabel_Binder_genShippingDocLabel_ws" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="parameters" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ICT_WS.pps.DS.genShippingDocLabel">
+    <wsdl:port name="ICT_WS_pps_DS_genShippingDocLabel_Port" binding="tns:ICT_WS_pps_DS_genShippingDocLabel_Binder">
+      <soap:address location="http://10.12.40.249:5556/ws/ICT_WS.pps.DS:genShippingDocLabel/ICT_WS_pps_DS_genShippingDocLabel_Port" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

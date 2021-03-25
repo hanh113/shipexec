@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="VNPPSOFFICE">
+  <ConnectionProperties>
+    <Extension>ORACLE</Extension>
+    <ConnectString>Data Source=VN_Van_Trung_TEST;Unicode=False</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>1455011c-21c7-47c4-a78b-ee161fa9877c</DataSourceID>
+</RptDataSource>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EDIPPS>
+  <Culture Name="繁體中文" value="ZH-TW" />
+  <Culture Name="English" value="EN-US" />
+  <Culture Name="简体中文" value="ZH-CN" />
+  <Setting BroadCast="8086" Timeout="120" PortTimeout="5" ModuleStyle="ComboBox" Culture="ZH-CN" Host="Default43" LabelHide="True" BottomHide="False" Skin="Default" ShowHost="True" FunctionHide="True" />
+  <Font ChangeFlag="False" Default="Arial; 10; Regular" Large="Arial; 12; Regular" Small="Arial; 8; Regular" />
+  <Module SelectMode="-1" LoadImage="True" Style="ComboBox" />
+</EDIPPS>

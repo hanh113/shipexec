@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.WCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Luxshare.DCS.WebApp.WCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://dcs.luxshare-ict.com/WCF/LdapAd.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Luxshare.DCS.Common" />
+  <xs:complexType name="LdapAdModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Account" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Luxshare.DCS.Common" minOccurs="0" name="AccountType" type="q1:LdapAdAccountTypeEnum" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pwd" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LdapAdModel" nillable="true" type="tns:LdapAdModel" />
+</xs:schema>

@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3843030D-1863-4164-866E-8AA66A9A2316}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EDIPPS</RootNamespace>
+    <AssemblyName>EDIPPS</AssemblyName>
+    <ApplicationIcon>pps.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <SignManifests>false</SignManifests>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="OperationWCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Packages\OperationWCF.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Array.cs" />
+    <Compile Include="classChromaLog.cs" />
+    <Compile Include="fAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fAbout.Designer.cs">
+      <DependentUpon>fAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fChangePwd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fChangePwd.Designer.cs">
+      <DependentUpon>fChangePwd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fError.Designer.cs">
+      <DependentUpon>fError.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fLock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fLock.Designer.cs">
+      <DependentUpon>fLock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSkin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSkin.Designer.cs">
+      <DependentUpon>fSkin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fLogin.Designer.cs">
+      <DependentUpon>fLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstallerHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="InstallerHelper.Designer.cs">
+      <DependentUpon>InstallerHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ClientHosting.cs" />
+    <Compile Include="Service\WcfHostingService.cs" />
+    <Compile Include="Web References\com.luxshare-ict.dcs\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="fAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fChangePwd.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fChangePwd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fError.resx">
+      <DependentUpon>fError.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fLock.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fLock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSkin.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fSkin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fLogin.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>fLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PPS.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Fakes Include="Fakes\ClientStatus.fakes" />
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\btnMin.jpg" />
+    <None Include="Resources\btnClose.jpg" />
+    <None Include="Resources\Title.jpg" />
+    <None Include="Resources\file.bmp" />
+    <None Include="Resources\folder.bmp" />
+    <None Include="Resources\folderopen.bmp" />
+    <None Include="Resources\MinBar.jpg" />
+    <None Include="Resources\btnResize.jpg" />
+    <None Include="Resources\btnMax.jpg" />
+    <Content Include="pps.ico" />
+    <Content Include="EDIPPS.txt" />
+    <Content Include="EDIPPS.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Web References\com.luxshare-ict.dcs\CheckUserModel1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\FlagTips1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd.wsdl" />
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\LdapAd4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web References\com.luxshare-ict.dcs\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="NetFwTypeLib">
+      <Guid>{58FBCF7C-E7A9-467C-80B3-FC65E8FCCA08}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://dcs.luxshare-ict.com/WCF/LdapAd.svc%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.luxshare-ict.dcs\</RelPath>
+      <UpdateFromURL>http://dcs.luxshare-ict.com/WCF/LdapAd.svc%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>EDIPPS_com_luxshare_ict_dcs_LdapAd</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckServer\CheckServer.csproj">
+      <Project>{37f2fa5c-fd4e-47a0-88b1-94ebdf44917a}</Project>
+      <Name>CheckServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClientStatus\ClientStatus.csproj">
+      <Project>{ea5db944-2726-4283-a0a0-38d35b8be8b3}</Project>
+      <Name>ClientStatus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClientUtils\ClientUtils.csproj">
+      <Project>{19ba5aaa-2373-4807-b207-c88c48517264}</Project>
+      <Name>ClientUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RemoteService\RemoteService.csproj">
+      <Project>{134ac830-dd95-4823-8cdd-0d103d25fd92}</Project>
+      <Name>RemoteService</Name>
+    </ProjectReference>
+    <ProjectReference Include="MESModel\MESModel.csproj">
+      <Project>{9AD33FD3-ABB3-41A4-8E34-EAFC2FA61E5A}</Project>
+      <Name>MESModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Host\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

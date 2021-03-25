@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE6CF8CE-1C04-4ACF-84FE-68B366B44821}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>wmsReportAC</RootNamespace>
+    <AssemblyName>wmsReportAC</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\PPS_PROD\ShippingAC\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonControl">
+      <HintPath>..\..\..\..\..\..\PPS-TEST\ShippingAC\CommonControl.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>D:\PPS_TEST\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>D:\PPS_TEST\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>D:\PPS_TEST\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>D:\PPS_TEST\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.5.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CancelSID.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CancelSID.Designer.cs">
+      <DependentUpon>CancelSID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Controller.cs" />
+    <Compile Include="CreateDeliveryNoteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateDeliveryNoteForm.Designer.cs">
+      <DependentUpon>CreateDeliveryNoteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGetWays\GetDatas.cs" />
+    <Compile Include="Entitys\QueryInfo.cs" />
+    <Compile Include="Entitys\ShipmentInfo.cs" />
+    <Compile Include="Entitys\T940UnicodeInfo.cs" />
+    <Compile Include="FastSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FastSearchForm.Designer.cs">
+      <DependentUpon>FastSearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formTrolleyMove.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formTrolleyMove.Designer.cs">
+      <DependentUpon>formTrolleyMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fPpartTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fPpartTransfer.Designer.cs">
+      <DependentUpon>fPpartTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPPSOUT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPPSOUT.Designer.cs">
+      <DependentUpon>FrmPPSOUT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSNSingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSNSingle.Designer.cs">
+      <DependentUpon>FrmSNSingle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmZCCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmZCCheck.Designer.cs">
+      <DependentUpon>FrmZCCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fWMSPpartCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fWMSPpartCheck.Designer.cs">
+      <DependentUpon>fWMSPpartCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fWMSQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fWMSQuery.Designer.cs">
+      <DependentUpon>fWMSQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SajetCommon.cs" />
+    <Compile Include="ShowPassStationLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowPassStationLog.Designer.cs">
+      <DependentUpon>ShowPassStationLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\CreateExcel.cs" />
+    <Compile Include="Entitys\ExecuteResult.cs" />
+    <Compile Include="fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fWMSCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fWMSCheck.Designer.cs">
+      <DependentUpon>fWMSCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entitys\PrintInfo.cs" />
+    <Compile Include="Utils\PrintLabel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportQuery.Designer.cs">
+      <DependentUpon>ReportQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Transfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transfer.Designer.cs">
+      <DependentUpon>Transfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\TransferDataTable.cs" />
+    <Compile Include="WMSBLL.cs" />
+    <Compile Include="WMSDLL.cs" />
+    <Compile Include="ZCshipmentid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZCshipmentid.Designer.cs">
+      <DependentUpon>ZCshipmentid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ZF_CheckOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZF_CheckOut.Designer.cs">
+      <DependentUpon>ZF_CheckOut.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CancelSID.resx">
+      <DependentUpon>CancelSID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateDeliveryNoteForm.resx">
+      <DependentUpon>CreateDeliveryNoteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FastSearchForm.resx">
+      <DependentUpon>FastSearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formTrolleyMove.resx">
+      <DependentUpon>formTrolleyMove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fPpartTransfer.resx">
+      <DependentUpon>fPpartTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPPSOUT.resx">
+      <DependentUpon>FrmPPSOUT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSNSingle.resx">
+      <DependentUpon>FrmSNSingle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmZCCheck.resx">
+      <DependentUpon>FrmZCCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fWMSCheck.resx">
+      <DependentUpon>fWMSCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fWMSPpartCheck.resx">
+      <DependentUpon>fWMSPpartCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fWMSQuery.resx">
+      <DependentUpon>fWMSQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ReportQuery.resx">
+      <DependentUpon>ReportQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowPassStationLog.resx">
+      <DependentUpon>ShowPassStationLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transfer.resx">
+      <DependentUpon>Transfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZCshipmentid.resx">
+      <DependentUpon>ZCshipmentid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZF_CheckOut.resx">
+      <DependentUpon>ZF_CheckOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ClientUtils\ClientUtils.csproj">
+      <Project>{19ba5aaa-2373-4807-b207-c88c48517264}</Project>
+      <Name>ClientUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibHelperAC\LibHelperAC.csproj">
+      <Project>{f1be51bb-42f3-480c-8296-53982eb36221}</Project>
+      <Name>LibHelperAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReserveAC\ReverseAC.csproj">
+      <Project>{adcb2c40-3ba3-4158-859c-bb9934e0dec1}</Project>
+      <Name>ReverseAC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<EDIPPS>
+  <English>
+    <Message Name="Exit"                   Value="Do you want to exit?" Caption="Exit?" />
+    <Message Name="APServerFail"           Value="AP Server Fail!" />
+    <Message Name="PasswordError"          Value="Password Error!" />
+    <Message Name="PasswordEmpty"          Value="Password Empty!" />
+    <Message Name="NewPasswordError"       Value="New Password Error!" />
+    <Message Name="NewPasswordEmpty"       Value="New Password Empty!" />
+    <Message Name="UserNotFound"           Value="Account Not Found!" />
+    <Message Name="DatabaseError"          Value="Database NG!" />
+    <Message Name="FileNotFound"           Value="File not found!" />
+    <Message Name="ChangeSucceed"          Value="Change Password OK." />
+    <Message Name="DeleteData"             Value="Do you want to delete this data?" />
+    <Message Name="UserDuplicate"          Value="Login Duplicate!" />
+  </English>
+  <繁體中文>
+    <Message Name="Exit"                   Value="確定要離開?" Caption="離開?" />
+    <Message Name="APServerFail"           Value="AP Server錯誤!" />
+    <Message Name="PasswordError"          Value="密碼錯誤!" />
+    <Message Name="PasswordEmpty"          Value="未輸入密碼!" />
+    <Message Name="NewPasswordError"       Value="新密碼與確認密碼不符合!" />
+    <Message Name="UserNotFound"           Value="查無此使用者!" />
+    <Message Name="DatabaseError"          Value="資料庫錯誤!" />
+    <Message Name="FileNotFound"           Value="檔案不存在!" />
+    <Message Name="ChangeSucceed"          Value="密碼更改成功." />
+    <Message Name="DeleteData"             Value="確定要刪除資料?" />
+    <Message Name="Host"                   Value="主機" />
+    <Message Name="Language"               Value="語言" />
+    <Message Name="Account"                Value="帳號" />
+    <Message Name="Password"               Value="密碼" />
+    <Message Name="Close"                  Value="結束" />
+    <Message Name="Logout?"                Value="登出?" />
+    <Message Name="Login"                  Value="登入" />
+    <Message Name="&amp;Exit"              Value="離開(&amp;X)" />
+    <Message Name="&amp;System"            Value="系統(&amp;S)" />
+    <Message Name="&amp;Login"             Value="登入(&amp;L)" />
+    <Message Name="&amp;Logout"            Value="登出(&amp;L)" />
+    <Message Name="&amp;Change Password"   Value="變更密碼(&amp;C)" />
+    <Message Name="&amp;Window"            Value="視窗(&amp;W)" />
+    <Message Name="&amp;Cascade"           Value="階梯式並排(&amp;C)" />
+    <Message Name="&amp;OK"                Value="確定(&amp;O)" />
+    <Message Name="Tile &amp;Horizontally" Value="水平並排(&amp;H)" />
+    <Message Name="Tile &amp;Vertically"   Value="垂直並排(&amp;V)" />
+    <Message Name="&amp;Minimize All"      Value="全部最小化(&amp;M)" />
+    <Message Name="&amp;Show All"          Value="全部顯示(&amp;S)" />
+    <Message Name="Close &amp;All"         Value="全部關閉(&amp;A)" />
+    <Message Name="&amp;Help"              Value="說明(&amp;H)" />
+    <Message Name="&amp;About"             Value="關於(&amp;A)" />
+    <Message Name="About"                  Value="關於" />
+    <Message Name="&amp;Option"            Value="選項(&amp;O)" />
+    <Message Name="Hide &amp;Bottom"       Value="隱藏底部(&amp;B)" />
+    <Message Name="Hide MES &amp;Label"    Value="隱藏MES標籤(&amp;L)" />
+    <Message Name="Skin"                   Value="面板" />
+    <Message Name="Font:"                  Value="字型:" />
+    <Message Name="Change Font"            Value="變更字型" />
+    <Message Name="Font"                   Value="字型" />
+    <Message Name="Large Font"             Value="大字型" />
+    <Message Name="Small Font"             Value="小字型" />
+    <Message Name="Show &amp;Host"         Value="顯示連線主機(&amp;H)" />
+    <Message Name="User Name: "            Value="使用者: " />
+    <Message Name="Version: {0}"           Value="版本: {0}" />
+    <Message Name="Button"                 Value="按鈕" />
+    <Message Name="Module"                 Value="模組" />
+    <Message Name="Function List"          Value="功能列示" />
+    <Message Name="Function"               Value="功能" />
+    <Message Name="Background"             Value="背景" />
+    <Message Name="Login"                  Value="登入畫面" />
+    <Message Name="Save"                   Value="儲存" />
+    <Message Name="None"                   Value="不選任何模組" />
+    <Message Name="Module Select"          Value="模組選取" />
+    <Message Name="Load Image"             Value="載入底圖" />
+    <Message Name="First Module"           Value="選取第一個模組" />
+    <Message Name="Password Empty!"        Value="密碼未填!" />
+    <Message Name="NewPasswordEmpty"       Value="新密碼未填!" />
+    <Message Name="Error"                  Value="錯誤" />
+    <Message Name="Warning"                Value="警告" />
+    <Message Name="Confirm"                Value="確認" />
+    <Message Name="Current Password"       Value="原密碼" />
+    <Message Name="New Password"           Value="新密碼" />
+    <Message Name="Confirm Password"       Value="確認密碼" />
+    <Message Name="OK"                     Value="確定" />
+    <Message Name="Cancel"                 Value="取消" />
+    <Message Name="Module Style"           Value="模組樣式" />
+    <Message Name="General"                Value="一般" />
+    <Message Name="ComboBox"               Value="下拉選單" />
+    <Message Name="2xComboBox"             Value="二維下拉選單" />
+    <Message Name="UserQuit"               Value="已離職" />
+    <Message Name="UserDisabled"           Value="已停用" />
+  </繁體中文>
+</EDIPPS>

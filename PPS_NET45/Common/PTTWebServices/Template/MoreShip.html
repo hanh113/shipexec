@@ -1,0 +1,18 @@
+﻿<Request>
+    <Access>
+        <Authentication user="{user}" password="{password}" />
+        <Connection application="{application}" source="{source}" />
+        <Organization name="{Organization}" />
+        <Profit name="{Profit}" />
+        <Locale language="{language}" />
+    </Access>
+    <RequestContent>
+        <Parameter>
+            <Record>
+                <!--<Field />-->
+                <Field name="ASNtype" value="{ASNtype}" />
+            </Record>
+        </Parameter>
+        <Document> {Document} </Document>
+    </RequestContent>
+</Request>
