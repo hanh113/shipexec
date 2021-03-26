@@ -476,9 +476,138 @@ WHERE a.CARTON_NO='{0}'
                     instruction = "Lithium Ion Batteries in Compliance with PI966 Section II";
                 }
             }
-
-            string handleSql = @" select distinct tsi.hawb,
+            string handleSql = @" select distinct (select FGWEIGHTKGP
+                                       from pptest.oms_partmapping OPP,
+                                            (SELECT DISTINCT TSS.PART_NO, TSP.PACK_CODE
+                                               FROM PPSUSER.T_SN_STATUS       TSS,
+                                                    PPSUSER.T_SHIPMENT_PALLET TSP
+                                              WHERE substr(TSS.pick_pallet_no,3) = TSP.PALLET_NO
+                                                AND TSS.CARTON_NO = '{0}') T
+                                      where OPP.PART = T.PART_NO
+                                        AND OPP.SUBPACKCODE = T.PACK_CODE) as WEIGHT_UNIT,
+                                        (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
+                                       from ppsuser.vw_mpn_info P_VMI,
+                                            (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
+                                               FROM PPSUSER.T_PALLET_ORDER       tpo,
+                                                    PPSUSER.T_SHIPMENT_PALLET TSP,
+                                              PPSUSER.T_SHIPMENT_SAWB tsw,
+                                              PPSUSER.T_ORDER_INFO tot,
+                                              PPSUSER.T_ALLO_TRACKINGNO tat
+                                                                  WHERE tpo.PALLET_NO = TSP.PALLET_NO
+                                            and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
+                                            and tot.DELIVERY_NO=tpo.DELIVERY_NO
+                                                                    AND tpo.DELIVERY_NO = tat.DELIVERY_NO
+                                            and tat.CARTON_NO='{0}'
+                                           ) T
+                                      where P_VMI.ICTPARTNO = T.ictpn
+                                        AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
+										t9u.SERVICELEVELID,
+										(select coo from PPSUSER.T_SN_STATUS where CARTON_NO='{0}' and rownum=1) OriginCountry, 
+										tsi.hawb,
                                         tsi.shipment_tracking,
+                                        tat.tracking_no,
+                                        to_char(tsi.shipping_time, 'yyyy/MM/dd') as shipdate,
+                                        t9u.parcelaccountnumber,
+                                        (SELECT tsh.SHIPPERNAME FROM ppsuser.t_shipper tsh) as SHIPER_CORP_NAME,
+                                        (SELECT tsh.shipperaddress1 FROM ppsuser.t_shipper tsh) as SHIPER_ADDRESS1,
+                                        (SELECT tsh.shipperaddress2 FROM ppsuser.t_shipper tsh) as SHIPER_ADDRESS2,
+                                        '' as SHIPER_ADDRESS3,
+                                        (SELECT tsh.shippercity FROM ppsuser.t_shipper tsh) as SHIPER_CITY,
+                                        (SELECT tsh.shipperstate FROM ppsuser.t_shipper tsh) as SHIPER_STATE_PROVINCE,
+                                        (SELECT tsh.shipperpostal FROM ppsuser.t_shipper tsh) as SHIPER_POSTCODE,
+                                        (SELECT tsh.SHIPPERCNTYCODE FROM ppsuser.t_shipper tsh) as SHIPER_COUNTRY,
+                                        '' as Consignee_UPS_Account_number,
+                                        t9u.shiptoname,
+                                        t9u.shiptocompany,
+                                        t9u.shiptoconttel,
+                                        case
+                                          when length(t9u.shiptoaddress) > 35 then
+                                           substr(t9u.shiptoaddress, 1, 35)
+                                          else
+                                           t9u.shiptoaddress
+                                        end as ST_ADDR1,
+                                        case
+                                          when length(t9u.shiptoaddress) > 35 then
+                                           substr(t9u.shiptoaddress, 35) || t9u.shiptoaddress2
+                                          else
+                                           t9u.shiptoaddress2
+                                        end as ST_ADDR2,                     
+                                        case when nvl(t9u.shiptoaddress3,'IS_NULL')='IS_NULL' AND
+                                                  NVL(t9u.shiptoaddress4,'IS_NULL')='IS_NULL'
+                                                  THEN ''
+                                              when nvl(t9u.shiptoaddress3,'IS_NULL')='IS_NULL' then
+                                           to_char(cast(t9u.shiptoaddress4 as varchar2(100)))
+                                          when NVL(t9u.shiptoaddress4,'IS_NULL')='IS_NULL' then
+                                           to_char(cast(t9u.shiptoaddress3 as varchar2(100)))
+                                          else
+                                           to_char(cast((t9u.shiptoaddress3 || ',' ||
+                                                        t9u. shiptoaddress4) as varchar2(100)))
+                                        end       
+                                         as ST_ADDR3,
+                                        t9u.shiptocity,
+                                        decode(instr(t9u.regiondesc,'='),0,t9u.regiondesc,substr(t9u.regiondesc,1,instr(t9u.regiondesc,'=')+1)) as regiondesc, --RegionDesc  如果有=号码, 那么取=号之前的
+                                        t9u.shiptozip,
+                                        t9u.shipcntycode,
+                                        tat.box_no as CARTON_SEQUNECE,
+                                        (select sum(toi.carton_qty)
+                                           from ppsuser.t_order_info toi
+                                          where toi.delivery_no = tat.delivery_no
+                                                ) as CARTON_COUNT,
+                                        (  select GROSSWEIGHTKG
+                                              from PPsuser.vw_mpn_info P_VMI,
+                                                   (SELECT DISTINCT TSS.PART_NO, TSP.PACK_CODE
+                                                      FROM PPSUSER.T_SN_STATUS TSS, 
+                                                           PPSUSER.T_SHIPMENT_PALLET TSP
+                                                     WHERE substr(TSS.pick_pallet_no,3) = TSP.PALLET_NO
+                                                       AND TSS.CARTON_NO = '{0}') T
+                                             where P_VMI.ICTPARTNO = T.PART_NO
+                                               AND P_VMI.PACKCODE = T.PACK_CODE) as DN_TOTAL_WEIGHT,                 
+                                        (select ROUND((P_VMI.CARTONLENGTHCM * P_VMI.CARTONHEIGHTCM * P_VMI.CARTONWIDTHCM) / 1000000/6000,2)
+                                        from PPsuser.vw_mpn_info P_VMI,
+                                            (SELECT DISTINCT TSS.PART_NO, TSP.PACK_CODE
+                                                FROM PPSUSER.T_SN_STATUS TSS, 
+                                                    PPSUSER.T_SHIPMENT_PALLET TSP
+                                                WHERE substr(TSS.Pick_Pallet_No,3) = TSP.PALLET_NO
+                                                  AND TSS.CARTON_NO = '{0}') T
+                                        where P_VMI.ICTPARTNO = T.PART_NO
+                                        AND P_VMI.PACKCODE = T.PACK_CODE) as packSize,
+                                        ttl.tracking_no SSCC,
+                                        tat.delivery_no,
+                                        t9u.custsono,
+                                        t9u.custpono,
+                                        t9u.weborderno,
+                                        t9u.custdelitem,
+                                        (SELECT DISTINCT TOI.MPN
+                                       FROM PPSUSER.T_ORDER_INFO TOI
+                                      WHERE TOI.DELIVERY_NO = T9U.DELIVERYNO
+                                        and toi.ictpn in (select distinct tss.part_no from PPSUSER.T_SN_STATUS tss where tss.CARTON_NO= 'H1DYG03YLL1S' and rownum = 1) ) AS AC_PN,  
+                                        (select count(tss_.serial_number)
+                                           from ppsuser.t_sn_status tss_
+                                          where tss_.carton_no = '{0}') as perCartonQty,
+                                        tat.carton_no,
+                                        '{1}' as Delivery_Instruction,
+                                        ROUND(t9u.endprice*(SELECT  COUNT(TSS.SERIAL_NUMBER) FROM  PPSUSER.T_SN_STATUS  TSS
+                                        WHERE  TSS.CARTON_NO='{0}'),2) as SHIPMENT_TOTAL_VALUE,
+                                        'USD',
+                                        DECODE(SUBSTR(t9u.custshipinst, 1, 5),
+                                               'ACDES',
+                                               substr(t9u.custshipinst, 5),
+                                               t9u.custshipinst),
+                                        '' as HAWB_,
+                                       (select distinct substr(pick_pallet_no,-4)from ppsuser.t_sn_status tss where tss.carton_no = '{0}')as PALLET_ID,
+                                        '' as CARTON_ID
+                          from ppsuser.t_shipment_info tsi,
+                               ppsuser.t_allo_trackingno tat,
+                               ppsuser.t_tracking_no_log ttl,
+                               ppsuser.t_940_unicode   t9u
+                         where tsi.shipment_id = tat.shipment_id
+                           and tat.delivery_no = t9u.deliveryno
+                           and tat.line_item = trim(t9u.custdelitem)
+                           and tat.carton_no = ttl.carton_no 
+                           and tat.carton_no = '{0}'";
+            #region
+            /*string handleSql = @" select distinct tsi.hawb,
+            tsi.shipment_tracking,
                                         tss.tracking_no,
                                         to_char(tsi.shipping_time, 'yyyy/MM/dd') as shipdate,
                                         t9u.parcelaccountnumber,
@@ -577,25 +706,35 @@ WHERE a.CARTON_NO='{0}'
                          where tsi.shipment_id = tss.shipment_id
                            and tss.delivery_no = t9u.deliveryno
                            and tss.line_item = trim(t9u.custdelitem) 
-                           and tss.carton_no = '{0}'";
+                           and tss.carton_no = '{0}'";*/
+            #endregion 
             if (region.Equals("AMR"))
             {
-                handleSql = @"select distinct  (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
+                handleSql = @"select distinct  (select FGWEIGHTKGP
+                                       from pptest.oms_partmapping OPP,
+                                            (SELECT DISTINCT TSS.PART_NO, TSP.PACK_CODE
+                                               FROM PPSUSER.T_SN_STATUS       TSS,
+                                                    PPSUSER.T_SHIPMENT_PALLET TSP
+                                              WHERE substr(TSS.pick_pallet_no,3) = TSP.PALLET_NO
+                                                AND TSS.CARTON_NO = '{0}') T
+                                      where OPP.PART = T.PART_NO
+                                        AND OPP.SUBPACKCODE = T.PACK_CODE) as WEIGHT_UNIT,
+                             (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
                                        from ppsuser.vw_mpn_info P_VMI,
                                             (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
                                                FROM PPSUSER.T_PALLET_ORDER       tpo,
                                                     PPSUSER.T_SHIPMENT_PALLET TSP,
-																										PPSUSER.T_SHIPMENT_SAWB tsw,
-																										PPSUSER.T_ORDER_INFO tot,
-																										PPSUSER.T_ALLO_TRACKINGNO tat
+                          PPSUSER.T_SHIPMENT_SAWB tsw,
+                          PPSUSER.T_ORDER_INFO tot,
+                          PPSUSER.T_ALLO_TRACKINGNO tat
                                               WHERE tpo.PALLET_NO = TSP.PALLET_NO
-																							and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
-																							and tot.DELIVERY_NO=tpo.DELIVERY_NO
+                        and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
+                        and tot.DELIVERY_NO=tpo.DELIVERY_NO
                                                 AND tpo.DELIVERY_NO = tat.DELIVERY_NO
-																								and tat.CARTON_NO='{0}'
-																								 ) T
+                        and tat.CARTON_NO='{0}'
+                       ) T
                                       where P_VMI.ICTPARTNO = T.ictpn
-                                        AND P_VMI.PACKCODE = T.PACK_CODE) TOTAL_WEIGHT,
+                                        AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
                             t9u.SERVICELEVELID,
                             (select coo from PPSUSER.T_SN_STATUS where CARTON_NO='{0}' and rownum=1) OriginCountry, 
                             (SELECT distinct   tsi.hawb
@@ -754,6 +893,14 @@ WHERE a.CARTON_NO='{0}'
             {
                 return false;
             }
+        }
+        public DataTable GetCartonTableDAL(string strPickpalletno)
+        {
+            string sql = String.Format(@"SELECT DISTINCT CARTON_NO FROM PPSUSER.T_SN_STATUS 
+                WHERE CARTON_NO NOT IN(SELECT CARTON_NO FROM PPSUSER.T_UPS_RAWDATA WHERE CARTON_NO IN 
+                (SELECT DISTINCT CARTON_NO FROM PPSUSER.T_SN_STATUS WHERE PICK_PALLET_NO = '{0}'))
+                AND PICK_PALLET_NO = '{0}'", strPickpalletno);
+            return ClientUtils.ExecuteSQL(sql).Tables[0];
         }
     }
 }

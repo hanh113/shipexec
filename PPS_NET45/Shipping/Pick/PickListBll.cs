@@ -298,7 +298,7 @@ namespace PickList
             if (!exeRes.Status)
             {
                 //send mail alert
-                return;
+                //return;
             }
             var res = await System.Threading.Tasks.Task.Run<string>(() => UpsService.Ship(JsonConvert.SerializeObject(shipRequest)));
             if (res != "OK")
@@ -379,13 +379,13 @@ namespace PickList
                         Day = dt.Rows[0]["SHIPDATE"].ToString().Split('/')[2]
                     },
                     //Shipper = "AAPL_ICT_KS_TEST",// dt.Rows[0]["SHIPER_CORP_NAME"].ToString(), 报错临时写定值
-                    Shipper = "AAPL_"+ dt.Rows[0]["parcelaccountnumber"].ToString(),
+                    Shipper = "AAPL_" + dt.Rows[0]["parcelaccountnumber"].ToString(),
                     ShipperReference = dt.Rows[0]["DELIVERY_NO"].ToString(),//DN
-                    ConsigneeReference = dt.Rows[0]["WEBORDERNO"].ToString()//WEB ORDER NO 
+                    ConsigneeReference = dt.Rows[0]["CUSTSONO"].ToString()
                 };
                 CommodityContents contents = new CommodityContents
                 {
-                    Description = "ACCESSORY",
+                    Description = "ELECTRONIC PRODUCTS",
                     OriginCountry = dt.Rows[0]["OriginCountry"].ToString(),//COO
                     ProductCode = dt.Rows[0]["AC_PN"].ToString(),//no 35 in transin-file
                     Quantity = dt.Rows[0]["PERCARTONQTY"].ToString(),
@@ -397,7 +397,7 @@ namespace PickList
                     },
                     UnitWeight = new UnitWeight
                     {
-                        Amount = dt.Rows[0]["DN_TOTAL_WEIGHT"].ToString(),//单箱重量
+                        Amount = dt.Rows[0]["WEIGHT_UNIT"].ToString(),
                         Units = "KGS"
                     }
                 };
@@ -413,17 +413,17 @@ namespace PickList
                     MiscReference6 = dt.Rows[0]["SSCC"].ToString(),
                     MiscReference7 = dt.Rows[0]["SHIPMENT_TRACKING"].ToString(),
                     MiscReference8 = dt.Rows[0]["SHIPMENTREACKING"].ToString(),
-                    MiscReference10 = dt.Rows[0]["TOTAL_WEIGHT"].ToString()+" KG",//固定是KG
+                    MiscReference10 = dt.Rows[0]["TOTAL_WEIGHT"].ToString() + " KG",//固定是KG
                     MiscReference11 = dt.Rows[0]["CARTON_SEQUNECE"].ToString(),
                     MiscReference12 = dt.Rows[0]["CARTON_COUNT"].ToString(),
                     TrackingNumber = dt.Rows[0]["TRACKING_NO"].ToString(),
                     Weight = new Weight
                     {
-                        //Amount = dt.Rows[0]["DN_TOTAL_WEIGHT"].ToString(),//单箱重量
-                        Amount = dt.Rows[0]["TOTAL_WEIGHT"].ToString(),//total weight of DN
+                        Amount = dt.Rows[0]["DN_TOTAL_WEIGHT"].ToString(),//单箱重量 no 27 in transinfile
+                        //Amount = dt.Rows[0]["TOTAL_WEIGHT"].ToString(),//total weight of DN
                         Units = "KG"
                     },
-                    WorldEaseCode = dt.Rows[0]["HAWB"].ToString(),
+                    WorldEaseCode = dt.Rows[0]["SHIPMENTREACKING"].ToString(),
                     WorldEaseFlag = "1"
                 };
                 shipRequest = new ShipRequestModel
@@ -450,6 +450,15 @@ namespace PickList
             PickListDal pl = new PickListDal();
             var res = pl.IsFinishShipExec(pickPallet, out errmsg);
             return res;
+        }
+
+        public DataTable GetCartonTableBLL(string strPickpalletno)
+        {
+            var dt = new DataTable();
+            if (string.IsNullOrWhiteSpace(strPickpalletno)) { return dt; }
+            PickListDal PickDal = new PickListDal();
+            dt = PickDal.GetCartonTableDAL(strPickpalletno);
+            return dt;
         }
     }
 }

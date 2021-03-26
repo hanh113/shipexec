@@ -22,6 +22,12 @@ namespace PickList
     public partial class fMain : Form
     {
         private bool IsShipexecFlag;
+        private Action<string, string> ShipExecShow = (carton, mesg) =>
+        {
+            string message = carton + "有异常： " + mesg;
+            string title = "ShipExec ERROR!";
+            MessageBox.Show(message, title);
+        };
         public fMain()
         {
             InitializeComponent();
@@ -724,19 +730,11 @@ namespace PickList
             if (!dt.Rows[0]["errmsg"].ToString().Contains("NG"))
             {
                 PickListBll pb1 = new PickListBll();
-                #region ups shipexec by wenxing 2021-3-22
                 if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
                 {
                     string strShipmentid = txtSmId.Text.Trim();
-                    Action<string, string> show = (carton, msg) =>
-                    {
-                        string message = carton + "有异常： " + msg;
-                        string title = "ShipExec ERROR!";
-                        MessageBox.Show(message, title);
-                    };
-                    pb1.CallShipExec(strCarton, strShipmentid, show);
+                    pb1.CallShipExec(strCarton, strShipmentid, ShipExecShow);
                 }
-                #endregion
             }
 
             #region
@@ -776,17 +774,21 @@ namespace PickList
             }
             else if (dt.Rows[0]["errmsg"].ToString().Contains("FINISH"))
             {
+                #region ups shipexec
+                strPickPalletno = dt.Rows[0]["pickpalletno"].ToString();
                 PickListBll pb1 = new PickListBll();
-                #region ups shipexec by wenxing 2021-3-22
                 string msg = "";
-                if (!pb1.IsFinishShipExec(strPickPalletno, out msg))
+                if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
                 {
-                    ShowMsg(msg, 0);
-                    txtCarton.Text = "";
-                    return;
+                    if (!pb1.IsFinishShipExec(strPickPalletno, out msg))
+                    {
+                        DataTable cartondt = pb1.GetCartonTableBLL(strPickPalletno);
+                        string strshipment = txtSmId.Text.Trim();
+                        for (int i = 0; i < cartondt.Rows.Count; i++)
+                            pb1.CallShipExec(cartondt.Rows[i]["CARTON_NO"].ToString(), strshipment, ShipExecShow);
+                    }
                 }
                 #endregion
-
 
                 strF = "F";
                 labqty.Text = dt.Rows[0]["strlbl"].ToString();
@@ -1262,8 +1264,8 @@ namespace PickList
         private void btnStart_Click(object sender, EventArgs e)
         {
             TextMsg.Text = "";
-            this.IsShipexecFlag = true;
-            //this.IsShipexecFlag = GetUPSShipexecFlag();
+            //this.IsShipexecFlag = true;
+            this.IsShipexecFlag = GetUPSShipexecFlag();
 
             //1. 检查
             //获得电脑名
@@ -1781,11 +1783,15 @@ namespace PickList
             PickListBll pb1 = new PickListBll();
             #region ups shipexec
             string msg = "";
-            if (!pb1.IsFinishShipExec(strPickpalletno, out msg))
+            if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
             {
-                ShowMsg(msg, 0);
-                txtCarton.Text = "";
-                return;
+                if (!pb1.IsFinishShipExec(strPickpalletno, out msg))
+                {
+                    DataTable cartondt = pb1.GetCartonTableBLL(strPickpalletno);
+                    string strshipment = txtSmId.Text.Trim();
+                    for (int i = 0; i < cartondt.Rows.Count; i++)
+                        pb1.CallShipExec(cartondt.Rows[i]["CARTON_NO"].ToString(), strshipment, ShipExecShow);
+                }
             }
             #endregion
 
