@@ -25,8 +25,12 @@ namespace PickList
         private Action<string, string> ShipExecShow = (carton, mesg) =>
         {
             string message = carton + "有异常： " + mesg;
-            string title = "ShipExec ERROR!";
-            MessageBox.Show(message, title);
+            var f = new ClientUtilsDll.Forms.PPSForm();
+            f.Show();
+            f.Height = 150;
+            f.prgMSG.Font = new System.Drawing.Font(f.prgMSG.Font.Name, 12F); ;
+            f.ErrorMSG(message.TP());
+            f.prgTitle.Text = "ShipExec ERROR!";
         };
         public fMain()
         {
