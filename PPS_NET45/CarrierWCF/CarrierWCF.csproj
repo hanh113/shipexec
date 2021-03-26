@@ -35,10 +35,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClientUtils, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\PPS_TEST\ClientUtils.dll</HintPath>
-    </Reference>
     <Reference Include="DBTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\OperationServiceICT\DBTools.dll</HintPath>
@@ -49,10 +45,6 @@
     </Reference>
     <Reference Include="OperationWCF">
       <HintPath>..\..\Packages\OperationWCF.dll</HintPath>
-    </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\OperationServiceICT\RefDll\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -78,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Core\corebridge.cs" />
     <Compile Include="Data\dataGateWay.cs" />
+    <Compile Include="Entity\MailInformation.cs" />
     <Compile Include="Entity\UPSRawDataEntity.cs" />
     <Compile Include="Models\Credentials.cs" />
     <Compile Include="Models\GetGroupRequestModel.cs" />

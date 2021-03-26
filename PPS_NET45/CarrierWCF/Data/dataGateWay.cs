@@ -3,7 +3,6 @@ using CarrierWCF.Model;
 using CarrierWCF.Models;
 using DBTools;
 using DBTools.Connection;
-using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -184,36 +183,43 @@ namespace CarrierWCF.Data
             return exeRes;
         }
 
-        public ExecutionResult InsertRawData(UPSRawDataEntity rawObj, DBTransaction dbtrans)
+        internal ExecutionResult InsertRawData(UPSRawDataEntity rawObj, DBTransaction dbtrans)
         {
-            //ExecutionResult exeRes = new ExecutionResult();
-            //string errormsg = "";
-            //object[][] procParams = new object[6][];
-            //procParams[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "incartonno", rawObj.CARTON_NO };
-            //procParams[1] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "intrackingno", rawObj.TRACKING_NO };
-            //procParams[2] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "inglobalmsn", rawObj.GLOBALMSN };
-            //procParams[3] = new object[] { ParameterDirection.Input, OracleDbType.Clob, "inrawdata", rawObj.RAWDATA };
-            //procParams[4] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "deliveryno", rawObj.DELIVERY_NO };
-            //procParams[5] = new object[] { ParameterDirection.Output, OracleDbType.Varchar2, "errmsg", errormsg };
-            //DataSet ds = ClientUtils.ExecuteProc("PPSUSER.SP_UPS_INSERTRAWDATA", procParams);
-            //exeRes.Message = ds.Tables[0].Rows[0]["errmsg"].ToString();
-            //exeRes.Status = exeRes.Message == "OK";
-            //return exeRes;
-
             ExecutionResult exeRes = new ExecutionResult();
-            exeRes.Status = true;
             dbparam = new DBParameter();
-//delete PPSUSER.T_UPS_RAWDATA where CARTON_NO = :CARTON_NO;
-            string sql = @"INSERT into PPSUSER.T_UPS_RAWDATA
-                        (CARTON_NO,TRACKING_NO, GLOBALMSN, RAWDATA,DELIVERY_NO)
-                        VALUES(:CARTON_NO,:TRACKING_NO,:GLOBALMSN,:RAWDATA,:DELIVERY_NO)";
-            dbparam.Add("CARTON_NO", OracleType.VarChar, rawObj.CARTON_NO);
-            dbparam.Add("TRACKING_NO", OracleType.VarChar, rawObj.TRACKING_NO);
-            dbparam.Add("GLOBALMSN", OracleType.VarChar, rawObj.GLOBALMSN);
-            dbparam.Add("RAWDATA", OracleType.VarChar, rawObj.RAWDATA);
-            dbparam.Add("DELIVERY_NO", OracleType.VarChar, rawObj.DELIVERY_NO);
+            dbparam.Add("incartonno", OracleType.VarChar, rawObj.CARTON_NO);
+            dbparam.Add("intrackingno", OracleType.VarChar, rawObj.TRACKING_NO);
+            dbparam.Add("inglobalmsn", OracleType.VarChar, rawObj.GLOBALMSN);
+            dbparam.Add("inrawdata", OracleType.Clob, rawObj.RAWDATA);
+            dbparam.Add("deliveryno", OracleType.VarChar, rawObj.DELIVERY_NO);
+            dbparam.Add("errmsg", OracleType.VarChar);
+            dbparam.GetParameters()[5].Direction = ParameterDirection.Output;
+            exeRes = dbtrans.ExecuteSP("PPSUSER.SP_UPS_INSERTRAWDATA", dbparam.GetParameters());
+            return exeRes;
 
-            exeRes = dbtrans.ExecuteUpdate(sql, dbparam.GetParameters());
+            //ExecutionResult exeRes = new ExecutionResult();
+            //exeRes.Status = true;
+            //dbparam = new DBParameter();
+            //string sql = @"INSERT into PPSUSER.T_UPS_RAWDATA
+            //            (CARTON_NO,TRACKING_NO, GLOBALMSN, RAWDATA,DELIVERY_NO)
+            //            VALUES(:CARTON_NO,:TRACKING_NO,:GLOBALMSN,:RAWDATA,:DELIVERY_NO)";
+            //dbparam.Add("CARTON_NO", OracleType.VarChar, rawObj.CARTON_NO);
+            //dbparam.Add("TRACKING_NO", OracleType.VarChar, rawObj.TRACKING_NO);
+            //dbparam.Add("GLOBALMSN", OracleType.VarChar, rawObj.GLOBALMSN);
+            //dbparam.Add("RAWDATA", OracleType.VarChar, rawObj.RAWDATA);
+            //dbparam.Add("DELIVERY_NO", OracleType.VarChar, rawObj.DELIVERY_NO);
+
+            //exeRes = dbtrans.ExecuteUpdate(sql, dbparam.GetParameters());
+            //return exeRes;
+        }
+
+        public ExecutionResult GetListAlertMail(DBTransaction dbtrans)
+        {
+            ExecutionResult exeRes = new ExecutionResult();
+            string qry = "SELECT PARA_VALUE from T_BASICPARAMETER_INFO where PARA_TYPE = :PARA_TYPE and ENABLED = 'Y' and rownum=1";
+            dbparam = new DBParameter();
+            dbparam.Add("PARA_TYPE", OracleType.VarChar, "UPS_ALERT");
+            exeRes = dbtrans.ExecuteQueryDS(qry, dbparam.GetParameters());
             return exeRes;
         }
     }

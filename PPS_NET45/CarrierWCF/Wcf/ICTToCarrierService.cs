@@ -4,12 +4,10 @@
     using CarrierWCF.Entity;
     using CarrierWCF.Model;
     using CarrierWCF.Models;
-    using ClientUtilsDll;
     using DBTools;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using OperationWCF;
-    using Oracle.ManagedDataAccess.Client;
     using System;
     using System.Configuration;
     using System.Data;
@@ -27,11 +25,13 @@
 
         public ICTToCarrierService()
         {
-            ClientUtils.ServerUrl = "http://10.171.16.201:8090/WCF_RemoteObject";
+            this.core = new corebridge();
         }
         private T callAPI<T>(string Url, object data)
         {
-            HttpResponseMessage result = HttpClientExtensions.PostAsJsonAsync<object>(new HttpClient(), Url, data).Result;
+            var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(30);
+            HttpResponseMessage result = HttpClientExtensions.PostAsJsonAsync<object>(client, Url, data).Result;
             HttpStatusCode statusCode = result.StatusCode;
             if (statusCode == HttpStatusCode.OK)
             {
@@ -60,7 +60,6 @@
         /// <returns></returns>
         public string ShipDevTest(string data)
         {
-            this.core = new corebridge();
             exeRes = new DBTools.ExecutionResult { Status = true, Message = "OK" };
             ShipModel model = new ShipModel();
             ShipOutputModel model2 = new ShipOutputModel();
@@ -105,11 +104,8 @@
                     }
                     finally
                     {
-                        if (loop >= 3 && res != "OK")
-                        {
-                            //send mail
+                        if (loop == 3 && res != "OK")
                             SendMailAlert(model.ShipmentRequest.Packages[0].MiscReference5, res);
-                        }
                     }
                 } while (loop < LOOP_COUT);
             }
@@ -123,7 +119,6 @@
         //public string DefaultShip(string data)
         public string DefaultShip(ShipModel model)
         {
-            this.core = new corebridge();
             exeRes = new DBTools.ExecutionResult { Status = true, Message = "OK" };
             //ShipModel model = new ShipModel();
             ShipOutputModel model2 = new ShipOutputModel();
@@ -140,7 +135,9 @@
                 }
                 if (!model2.ShipmentResponse.PackageDefaults.ErrorCode.Equals(0) || !this.exeRes.Status)
                 {
-                    if (model2.ShipmentResponse.PackageDefaults.ErrorCode == 1001 && model2.ShipmentResponse.PackageDefaults.ErrorMessage.Contains("Duplicate Tracking Number"))
+                    if ((model2.ShipmentResponse.PackageDefaults.ErrorCode == 1001 && model2.ShipmentResponse.PackageDefaults.ErrorMessage.Contains("Duplicate Tracking Number"))
+                        || (model2.ShipmentResponse.PackageDefaults.ErrorCode == 115 && model2.ShipmentResponse.PackageDefaults.ErrorMessage.Contains("found in shipment history"))//最近5天
+                        )
                     {
                         isDuplicate = true;
                         var objSearch = JsonConvert.DeserializeObject<ExecutionResult>(GetGlbMSNByTrackingNo(model.ShipmentRequest.Packages[0].TrackingNumber));
@@ -151,6 +148,7 @@
                                 CARTON_NO = model.ShipmentRequest.Packages[0].MiscReference5,
                                 TRACKING_NO = model.ShipmentRequest.Packages[0].TrackingNumber,
                                 GLOBALMSN = objSearch.Anything.ToString(),
+                                DELIVERY_NO = model.ShipmentRequest.PackageDefaults.ShipperReference
                             };
                             var reReq = RePrint(JsonConvert.SerializeObject(rawObj));
                             if (reReq != "OK")
@@ -230,7 +228,6 @@
 
         public string Void(string data)
         {
-            this.core = new corebridge();
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             VoidResponseModel Res = new VoidResponseModel();
             var objTemp = new VoidRequestModel();
@@ -281,7 +278,6 @@
 
         public string GetGlbMSNByTrackingNo(string tracingNo)
         {
-            this.core = new corebridge();
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             SearchRequestModel Mdel = new SearchRequestModel()
             {
@@ -342,7 +338,6 @@
         }
         public string RePrint(string data)
         {
-            this.core = new corebridge();
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             RePrintResponseModel Mdel2 = new RePrintResponseModel();
             RePrintReqUPSModel Mdel = new RePrintReqUPSModel();
@@ -377,9 +372,10 @@
             return exeRes.Message;
         }
 
-        public async void SendMailAlert(string carton, string msg)
+        public void SendMailAlert(string carton, string msg)
         {
-            await System.Threading.Tasks.Task.Run(() => this.core.InsertMailTest(carton, msg));
+            this.core.SendMail(carton, msg);
+            //await System.Threading.Tasks.Task.Run(() => this.core.SendMail(carton, msg));
         }
     }
 }
