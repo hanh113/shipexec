@@ -4,6 +4,7 @@ using CarrierWCF.Model;
 using CarrierWCF.Models;
 using DBTools;
 using DBTools.Connection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace CarrierWCF.Core
         dataGateWay dgw;
         ExecutionResult exeRes;
         DBTransaction dbtrans;
+        private static ClientAccessCredentials CLIENT_ACCESS { set; get; }
+        private static UserContext USER_CONTEXT { set; get; }
         public corebridge()
         {
         }
@@ -125,9 +128,8 @@ namespace CarrierWCF.Core
             try
             {
                 dbtrans.BeginTransaction();
-                //写入总表
-                ExecutionResult exeRes = new ExecutionResult();
-                exeRes = dgw.GetListAlertMail(dbtrans);
+                exeRes = dgw.GetParameter(dbtrans, "UPS_ALERT");
+                //exeRes = dgw.GetListAlertMail(dbtrans);
                 var ds = exeRes.Anything as DataSet;
                 if (ds.Tables[0].Rows.Count > 0)
                 {
@@ -139,7 +141,7 @@ namespace CarrierWCF.Core
                         Subject = "UPS SHIPEXEC ERROR",
                         Object = new MailTo()
                         {
-                            ToAddresses= ds.Tables[0].Rows[0]["PARA_VALUE"].ToString().Split('#').Select(x => { return x + "@luxshare-ict.com"; }).ToArray()
+                            ToAddresses = ds.Tables[0].Rows[0]["PARA_VALUE"].ToString().Split('#').Select(x => { return x + "@luxshare-ict.com"; }).ToArray()
                         }
                     });
                 }
@@ -184,6 +186,70 @@ namespace CarrierWCF.Core
                     throw new Exception(result.StatusCode.ToString() + "\t" + jobj["Message"].ToString());
                 default:
                     throw new Exception(result.StatusCode.ToString());
+            }
+        }
+
+        public static ClientAccessCredentials GetClientAccess()
+        {
+            if (CLIENT_ACCESS != null)
+                return CLIENT_ACCESS;
+            else
+            {
+                var _dbtrans = new DBTransaction(DBAddr);
+                var _dgw = new dataGateWay();
+                try
+                {
+                    _dbtrans.BeginTransaction();
+                    ExecutionResult exeRes = _dgw.GetParameter(_dbtrans, "UPS_ACCESS");
+                    var ds = exeRes.Anything as DataSet;
+                    CLIENT_ACCESS = JsonConvert.DeserializeObject<ClientAccessCredentials>(ds.Tables[0].Rows[0]["PARA_VALUE"].ToString());
+                    if (exeRes.Status)
+                        _dbtrans.Commit();
+                    else
+                        _dbtrans.Rollback();
+                }
+                catch (Exception ex)
+                {
+                    _dbtrans.Rollback();
+                    return null;
+                }
+                finally
+                {
+                    _dbtrans.EndTransaction();
+                }
+                return CLIENT_ACCESS;
+            }
+        }
+
+        public static UserContext GetUserContext()
+        {
+            if (USER_CONTEXT != null)
+                return USER_CONTEXT;
+            else
+            {
+                var _dbtrans = new DBTransaction(DBAddr);
+                var _dgw = new dataGateWay();
+                try
+                {
+                    _dbtrans.BeginTransaction();
+                    ExecutionResult exeRes =  _dgw.GetParameter(_dbtrans, "UPS_CONTEXT");
+                    var ds = exeRes.Anything as DataSet;
+                    USER_CONTEXT = JsonConvert.DeserializeObject<UserContext>(ds.Tables[0].Rows[0]["PARA_VALUE"].ToString());
+                    if (exeRes.Status)
+                        _dbtrans.Commit();
+                    else
+                        _dbtrans.Rollback();
+                }
+                catch
+                {
+                    _dbtrans.Rollback();
+                    return null;
+                }
+                finally
+                {
+                    _dbtrans.EndTransaction();
+                }
+                return USER_CONTEXT;
             }
         }
     }

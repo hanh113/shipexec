@@ -213,12 +213,12 @@ namespace CarrierWCF.Data
             //return exeRes;
         }
 
-        public ExecutionResult GetListAlertMail(DBTransaction dbtrans)
+        public ExecutionResult GetParameter(DBTransaction dbtrans, string paraType)
         {
             ExecutionResult exeRes = new ExecutionResult();
             string qry = "SELECT PARA_VALUE from T_BASICPARAMETER_INFO where PARA_TYPE = :PARA_TYPE and ENABLED = 'Y' and rownum=1";
             dbparam = new DBParameter();
-            dbparam.Add("PARA_TYPE", OracleType.VarChar, "UPS_ALERT");
+            dbparam.Add("PARA_TYPE", OracleType.VarChar, paraType);
             exeRes = dbtrans.ExecuteQueryDS(qry, dbparam.GetParameters());
             return exeRes;
         }

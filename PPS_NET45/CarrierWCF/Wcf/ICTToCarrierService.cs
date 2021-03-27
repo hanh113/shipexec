@@ -66,6 +66,10 @@
             try
             {
                 model = JsonConvert.DeserializeObject<ShipModel>(data);
+                //model.ClientAccessCredentials = new ClientAccessCredentials();
+                //model.UserContext = new UserContext();
+                model.ClientAccessCredentials = corebridge.GetClientAccess();
+                model.UserContext = corebridge.GetUserContext();
                 model2 = this.callAPI<ShipOutputModel>(ServiceUrl + "/Ship", JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(model)).ToObject<object>());
             }
             catch (Exception ex)
@@ -89,6 +93,10 @@
             try
             {
                 model = JsonConvert.DeserializeObject<ShipModel>(data);
+                //model.ClientAccessCredentials = new ClientAccessCredentials();
+                //model.UserContext = new UserContext();
+                model.ClientAccessCredentials = corebridge.GetClientAccess();
+                model.UserContext = corebridge.GetUserContext();
                 do
                 {
                     try
@@ -186,8 +194,8 @@
                             {
                                 Void(JsonConvert.SerializeObject(new VoidRequestModel
                                 {
-                                    ClientAccessCredentials = new ClientAccessCredentials(),
-                                    UserContext = new UserContext(),
+                                    //ClientAccessCredentials = new ClientAccessCredentials(),
+                                    //UserContext = new UserContext(),
                                     GlobalMsns = new int[] { package.GlobalMsn }
                                 }));
                                 exeRes.Status = false;
@@ -234,8 +242,10 @@
             try
             {
                 objTemp = JsonConvert.DeserializeObject<VoidRequestModel>(data);
-                objTemp.ClientAccessCredentials = new ClientAccessCredentials();
-                objTemp.UserContext = new UserContext();
+                //objTemp.ClientAccessCredentials = new ClientAccessCredentials();
+                //objTemp.UserContext = new UserContext();
+                objTemp.ClientAccessCredentials = corebridge.GetClientAccess();
+                objTemp.UserContext = corebridge.GetUserContext();
                 JObject obj2 = JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(objTemp));
                 Res = this.callAPI<VoidResponseModel>(ServiceUrl + "/voidpackages", obj2.ToObject<object>());
                 if (!Res.ErrorCode.Equals(0))
@@ -281,8 +291,10 @@
             exeRes = new ExecutionResult { Status = true, Message = "OK" };
             SearchRequestModel Mdel = new SearchRequestModel()
             {
-                ClientAccessCredentials = new ClientAccessCredentials(),
-                UserContext = new UserContext(),
+                //ClientAccessCredentials = new ClientAccessCredentials(),
+                //UserContext = new UserContext(),
+                ClientAccessCredentials = corebridge.GetClientAccess(),
+                UserContext = corebridge.GetUserContext(),
                 SearchCriteria = new SearchCriteria()
                 {
                     Skip = "0",
@@ -346,8 +358,10 @@
                 var rawOjb = JsonConvert.DeserializeObject<UPSRawDataEntity>(data);
                 Mdel.PrintConfiguration = new PrintConfiguration()
                 { GlobalMsn = rawOjb.GLOBALMSN };
-                Mdel.ClientAccessCredentials = new ClientAccessCredentials();
-                Mdel.UserContext = new UserContext();
+                //Mdel.ClientAccessCredentials = new ClientAccessCredentials();
+                //Mdel.UserContext = new UserContext();
+                Mdel.ClientAccessCredentials = corebridge.GetClientAccess();
+                Mdel.UserContext = corebridge.GetUserContext();
                 Mdel2 = this.callAPI<RePrintResponseModel>(ServiceUrl + "/Print", JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(Mdel)).ToObject<object>());
                 if (!Mdel2.ErrorCode.Equals(0))
                 {
