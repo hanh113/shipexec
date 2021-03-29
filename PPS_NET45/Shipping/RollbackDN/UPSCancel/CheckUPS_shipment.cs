@@ -55,9 +55,9 @@ namespace RollbackDN.UPSCancel
                 List<int> ls = new List<int>();
                 //ICTService.ICTToCarrierServiceClient ictSrv = new ICTService.ICTToCarrierServiceClient();
                 string sql = @"SELECT distinct T.TRACKING_NO trackingNo
-                          FROM t_sn_status t
+                          FROM ppsuser.t_sn_status t
                          WHERE     t.shipment_id IN (SELECT shipment_id
-                                   FROM t_shipment_info
+                                   FROM ppsuser.t_shipment_info
                               WHERE  carrier_name LIKE '%UPS%'
                                     AND TYPE = 'PARCEL')
                         AND shipment_id = :shipment_id ";
@@ -71,7 +71,7 @@ namespace RollbackDN.UPSCancel
                 }
                 else
                 {
-                    string sqlMsns = @"select globalmsn from t_ups_packages where trackingnumber=:trackingnumber";
+                    string sqlMsns = @"select globalmsn from ppsuser.t_ups_rawdata where TRACKING_NO=:trackingnumber";
                     object[][] para1 = new object[1][];
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
