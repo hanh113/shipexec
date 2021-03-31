@@ -71,6 +71,10 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\..\..\..\..\..\PPS_TEST\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="OperationWCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_TEST\OperationWCF.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.5.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
@@ -81,6 +85,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -132,12 +137,8 @@
       <DependentUpon>TESTSN_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Wcf\Credentials.cs" />
+    <Compile Include="Wcf\IICTToCarrierService.cs" />
     <Compile Include="Wcf\shipRequeset.cs" />
-    <Compile Include="Web References\UpsWcf\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="fCheck.resx">
       <DependentUpon>fCheck.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,14 +174,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Web References\UpsWcf\ICTToCarrierService.wsdl" />
-    <None Include="Web References\UpsWcf\ICTToCarrierService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Web References\UpsWcf\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -193,25 +186,6 @@
       <Project>{504fc282-31b5-4a4f-b76f-8fbef4d9e656}</Project>
       <Name>LibHelper</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://10.171.16.201:8091/ICTToCarrierService">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\UpsWcf\</RelPath>
-      <UpdateFromURL>http://10.171.16.201:8091/ICTToCarrierService</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>PickList_UpsWcf_ICTToCarrierService</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\UpsWcf\ICTToCarrierService.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -490,17 +490,19 @@ WHERE a.CARTON_NO='{0}'
                                             (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
                                                FROM PPSUSER.T_PALLET_ORDER       tpo,
                                                     PPSUSER.T_SHIPMENT_PALLET TSP,
-                                              PPSUSER.T_SHIPMENT_SAWB tsw,
+                                              --PPSUSER.T_SHIPMENT_SAWB tsw,
                                               PPSUSER.T_ORDER_INFO tot,
                                               PPSUSER.T_ALLO_TRACKINGNO tat
                                                                   WHERE tpo.PALLET_NO = TSP.PALLET_NO
-                                            and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
+                                           -- and tpo.SHIPMENT_ID = tsw.SHIPMENT_ID
                                             and tot.DELIVERY_NO=tpo.DELIVERY_NO
                                                                     AND tpo.DELIVERY_NO = tat.DELIVERY_NO
                                             and tat.CARTON_NO='{0}'
                                            ) T
                                       where P_VMI.ICTPARTNO = T.ictpn
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
+                                        '' SHIPMENTREACKING,
+                                        '' SAWB,
 										t9u.SERVICELEVELID,
 										(select coo from PPSUSER.T_SN_STATUS where CARTON_NO='{0}' and rownum=1) OriginCountry, 
 										tsi.hawb,

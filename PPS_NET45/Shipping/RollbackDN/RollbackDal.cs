@@ -9,7 +9,7 @@ namespace RollbackDN
 {
     class RollbackDal
     {
-      
+
 
         public string CheckDNByProcedure(string dn, out string RetMsg)
         {
@@ -161,7 +161,7 @@ namespace RollbackDN
         }
 
         //开始按钮检查对应shipment的状态
-        public string CheckDNtoShipmentIDByProcedure(string dn,out string DNType, out string RetMsg)
+        public string CheckDNtoShipmentIDByProcedure(string dn, out string DNType, out string RetMsg)
         {
             object[][] procParams = new object[3][];
             procParams[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "InputSno", dn };
@@ -200,7 +200,7 @@ namespace RollbackDN
 
         }
 
-        public string RBSNbyDNByProcedure(string sn,  string strGroupcode, out string RetMsg)
+        public string RBSNbyDNByProcedure(string sn, string strGroupcode, out string RetMsg)
         {
             object[][] procParams = new object[3][];
             procParams[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "incartonno", sn };
@@ -236,7 +236,7 @@ namespace RollbackDN
                                   case  when zc_pick_qty >0 then zc_pick_qty else 0  end as ZCPiCK数量, 
                                   case  when zc_pick_carton >0 then zc_pick_carton else 0  end  as ZCPICK箱数 
                              from ppsuser.t_pallet_order2_zc 
-                            where delivery_no = '{0}' and zc_dn = '{1}'", dn,dn);
+                            where delivery_no = '{0}' and zc_dn = '{1}'", dn, dn);
 
             DataSet dataSet = new DataSet();
             try
@@ -276,7 +276,7 @@ namespace RollbackDN
         }
 
 
-        public DataSet GetZCDNListBySQL(string strStartTime ,string strEndTime)
+        public DataSet GetZCDNListBySQL(string strStartTime, string strEndTime)
         {
             string sql = string.Format(@"
                                         select a.shipment_id,
@@ -289,7 +289,7 @@ namespace RollbackDN
                                          where a.cdt >= to_date('{0}', 'yyyy-mm-dd')
                                            and a.cdt <= to_date('{1}', 'yyyy-mm-dd')
                                            and status is not null
-                                                        ",strStartTime,  strEndTime);
+                                                        ", strStartTime, strEndTime);
 
             DataSet dataSet = new DataSet();
             try
@@ -304,7 +304,7 @@ namespace RollbackDN
             return dataSet;
 
         }
-        public string CheckDNGroupCodetoBackUPBySP(string strSID ,string strDN, out string strGroupcode ,out string RetMsg)
+        public string CheckDNGroupCodetoBackUPBySP(string strSID, string strDN, out string strGroupcode, out string RetMsg)
         {
             object[][] procParams = new object[4][];
             procParams[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "insid", strSID };
@@ -328,7 +328,7 @@ namespace RollbackDN
             }
 
         }
-        public DataSet showNeedZCCartonListBySQL( string  strGroupcode)
+        public DataSet showNeedZCCartonListBySQL(string strGroupcode)
         {
             string sql = string.Format(@"
                              select *
@@ -372,7 +372,7 @@ namespace RollbackDN
                                                        from ppsuser.t_zc_dn_info
                                                       where group_code = '{1}'))) aaa
                               order by aaa.delivery_no asc, aaa.pallet_no asc, aaa.carton_no asc
-                                                        ",  strGroupcode, strGroupcode);
+                                                        ", strGroupcode, strGroupcode);
 
             DataSet dataSet = new DataSet();
             try
@@ -483,7 +483,7 @@ namespace RollbackDN
                                                 to_date('{1}', 'yyyy-mm-dd')
                                             and status is not null
                                                         ", strStartTime, strEndTime);
-          
+
             DataSet dataSet = new DataSet();
             try
             {
@@ -498,7 +498,21 @@ namespace RollbackDN
 
         }
 
-
+        public DataTable getGlobalMSN(string shipmentID)
+        {
+            string sql = @"SELECT DISTINCT globalmsn from PPSUSER.T_UPS_RAWDATA
+                                where tracking_no in
+                                (SELECT distinct T.TRACKING_NO trackingNo
+                                                          FROM ppsuser.t_allo_trackingno t
+                                                         WHERE     t.shipment_id IN (SELECT shipment_id
+                                                                   FROM ppsuser.t_shipment_info
+                                                              WHERE  carrier_name LIKE '%UPS%'
+                                                                    AND TYPE = 'PARCEL')
+                                AND shipment_id = :shipment_id)";
+            object[][] para = new object[1][];
+            para[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", shipmentID };
+            return ClientUtils.ExecuteSQL(sql, para).Tables[0];
+        }
 
     }
 }

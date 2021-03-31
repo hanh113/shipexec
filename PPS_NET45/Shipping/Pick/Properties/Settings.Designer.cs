@@ -22,15 +22,5 @@ namespace PickList.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://10.171.16.201:8091/ICTToCarrierService")]
-        public string PickList_UpsWcf_ICTToCarrierService {
-            get {
-                return ((string)(this["PickList_UpsWcf_ICTToCarrierService"]));
-            }
-        }
     }
 }

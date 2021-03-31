@@ -289,21 +289,29 @@ namespace PickList
 
         public async void CallShipExec(string cartonNo, string shipmentID, Action<string, string> ShowResult)//, out string msg
         {
-            #region UPS新交互方式 请求wcf 获取label data
-            UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
-            ShipRequestModel shipRequest = new ShipRequestModel();
-            PickListDal PickDal = new PickListDal();
-            string region = PickDal.GetShipmentInfo(shipmentID).Rows[0]["REGION"].ToString();
-            var exeRes = getRequestData(cartonNo, region, out shipRequest);
-            if (!exeRes.Status)
+            string ppsURL = "";
+            string msg = "";
+            var res = this.GetDBType("ICTSerivce_URL", out ppsURL, out msg);
+            if (!String.IsNullOrWhiteSpace(ppsURL))
             {
-                //send mail alert
-                //return;
+                CarrierWCF.Wcf.IICTToCarrierService WS = OperationWCF.HttpChannel.Get<CarrierWCF.Wcf.IICTToCarrierService>(ppsURL);
+                ShipRequestModel shipRequest = new ShipRequestModel();
+                PickListDal PickDal = new PickListDal();
+                string region = PickDal.GetShipmentInfo(shipmentID).Rows[0]["REGION"].ToString();
+                var exeRes = getRequestData(cartonNo, region, out shipRequest);
+                if (!exeRes.Status)
+                {
+                    //send mail alert
+                    await System.Threading.Tasks.Task.Run<string>(() => WS.SendMailAlert(cartonNo, exeRes.Message));
+                    ShowResult(cartonNo, exeRes.Message);
+                    return;
+                }
+                res = await System.Threading.Tasks.Task.Run<string>(() => WS.Ship(JsonConvert.SerializeObject(shipRequest)));
+                if (res != "OK")
+                    ShowResult(cartonNo, res);
             }
-            var res = await System.Threading.Tasks.Task.Run<string>(() => UpsService.Ship(JsonConvert.SerializeObject(shipRequest)));
-            if (res != "OK")
-                ShowResult(cartonNo, res + " " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-            #endregion
+            else
+                ShowResult("配置有异常", "UPS ShipExec配置有异常，请再检查！");
         }
 
 

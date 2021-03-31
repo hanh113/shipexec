@@ -386,9 +386,10 @@
             return exeRes.Message;
         }
 
-        public void SendMailAlert(string carton, string msg)
+        public string SendMailAlert(string carton, string msg)
         {
-            this.core.SendMail(carton, msg);
+            var res = this.core.SendMail(carton, msg);
+            return res.Message;
             //await System.Threading.Tasks.Task.Run(() => this.core.SendMail(carton, msg));
         }
     }

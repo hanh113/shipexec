@@ -18,12 +18,6 @@ namespace RollbackDN
         public CancelSID()
         {
             InitializeComponent();
-
-            var lst = new List<int>();
-            lst.Add(3192179);
-            string data = JsonConvert.SerializeObject(new { GlobalMsns = lst });
-            CarrierWCF.Wcf.IICTToCarrierService WS = HttpChannel.Get<CarrierWCF.Wcf.IICTToCarrierService>("http://localhost:8091/ICTToCarrierService");
-            string dataout = WS.Void(data);
         }
         private Int32 g_curRow = -1;    //当前选中行号
 
@@ -115,7 +109,7 @@ namespace RollbackDN
 
         private void btnRollback_Click(object sender, EventArgs e)
         {
-            string msg = "";
+            //string msg = "";
             if (string.IsNullOrEmpty(txtSmId.Text))
             {
                 ShowMsg("NG，请选择合适的集货单再取消集货单", 0);
@@ -125,11 +119,22 @@ namespace RollbackDN
             string strSID = txtSmId.Text;
 
             btnRollback.Enabled = false;
+            RollbackBll pb = new RollbackBll();
+
             //test
+
+            string checkUPSshipment = string.Empty;
+            string sendUPSCancel = string.Empty;
+            //string checkEnable = "";
+            CheckUPS_shipment chk = new CheckUPS_shipment();
+            checkUPSshipment = chk.UPSCheck(strSID);
+            var upsShipExecFlag = chk.CheckUPSEnable();
+            var lstGlobalMSN = new List<int>();
+            if (upsShipExecFlag)
+                lstGlobalMSN = pb.GetListGlobalMSN(strSID);
 
             string strResult = string.Empty;
             string strResulterrmsg = string.Empty;
-            RollbackBll pb = new RollbackBll();
             strResult = pb.RBShipmentID2(strSID, out strResulterrmsg);
             if (strResult.Equals("NG"))
             {
@@ -162,23 +167,20 @@ namespace RollbackDN
                         }
                     }
                 }
-                string checkUPSshipment = string.Empty;
-                string sendUPSCancel = string.Empty;
-                //string checkEnable = "";
-                CheckUPS_shipment chk = new CheckUPS_shipment();
-                checkUPSshipment = chk.UPSCheck(strSID);
+
                 if (checkUPSshipment.Equals("OK"))
                 {
                     // checkEnable = chk.CheckUPSEnable();
-                    if (chk.CheckUPSEnable())
+                    if (upsShipExecFlag)
                     {
-                        sendUPSCancel = chk.SendShipmentCancel(strSID);
+                        sendUPSCancel = chk.SendShipmentCancel(lstGlobalMSN);
                         if (sendUPSCancel.Equals("OK"))
                         {
-                            msg = "Cancel Finished and Sent cancel request to Sever OK";
+                            strResult += "-Cancel Finished and Sent cancel request to Sever OK";
                             //ShowMsg("Cancel Finished and Sent cancel request to Sever OK", -1);
                         }
-
+                        else
+                            strResult += "-" + sendUPSCancel;
                     }
                     //else if(checkEnable.Equals("N"))
                     //{
@@ -196,7 +198,7 @@ namespace RollbackDN
                 //    msg = "Cancel Finished, but " + sendUPSCancel;
                 //    //ShowMsg("Cancel Finished, but " + sendUPSCancel, 1);
                 //}
-                ShowMsg(msg, -1);
+                ShowMsg(strResult, -1);
             }
             btnRollback.Enabled = true;
         }

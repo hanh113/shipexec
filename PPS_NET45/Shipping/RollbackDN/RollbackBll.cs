@@ -13,7 +13,7 @@ namespace RollbackDN
         /// </summary>
         /// <param name="DN"></param>
         /// <returns></returns>
-        public string CheckDNStatus(string DN,out string errmsg)
+        public string CheckDNStatus(string DN, out string errmsg)
         {
 
             errmsg = string.Empty;
@@ -45,7 +45,7 @@ namespace RollbackDN
                 return dataSet.Tables[0];
             }
         }
-        
+
 
         public DataTable GetPICKInfoDataTable(string dn)
         {
@@ -75,7 +75,7 @@ namespace RollbackDN
                 return dataSet.Tables[0];
             }
         }
-        
+
 
 
 
@@ -89,7 +89,7 @@ namespace RollbackDN
 
             errmsg = string.Empty;
             RollbackDal rbShipmentid = new RollbackDal();
-            string  strRB = rbShipmentid.RBShipmentIDByProcedure(shipmentid,out errmsg);
+            string strRB = rbShipmentid.RBShipmentIDByProcedure(shipmentid, out errmsg);
 
             if (strRB.Equals("NG"))
             {
@@ -115,12 +115,12 @@ namespace RollbackDN
             return "OK";
         }
 
-        public string RBSNbyDN(string shipmentid,  string strGroupcode, out string errmsg)
+        public string RBSNbyDN(string shipmentid, string strGroupcode, out string errmsg)
         {
 
             errmsg = string.Empty;
             RollbackDal rbsn = new RollbackDal();
-            string strRBSN = rbsn.RBSNbyDNByProcedure(shipmentid , strGroupcode, out errmsg);
+            string strRBSN = rbsn.RBSNbyDNByProcedure(shipmentid, strGroupcode, out errmsg);
 
             if (strRBSN.Contains("NG"))
             {
@@ -137,7 +137,7 @@ namespace RollbackDN
             errmsg = string.Empty;
             dntype = string.Empty;
             RollbackDal rbdn = new RollbackDal();
-            string strRB = rbdn.CheckDNtoShipmentIDByProcedure(shipmentid,out dntype, out errmsg);
+            string strRB = rbdn.CheckDNtoShipmentIDByProcedure(shipmentid, out dntype, out errmsg);
 
             if (strRB.Contains("NG"))
             {
@@ -149,12 +149,12 @@ namespace RollbackDN
         }
 
 
-        public string LockDNtoShipmentID(string shipmentid ,out string errmsg)
+        public string LockDNtoShipmentID(string shipmentid, out string errmsg)
         {
 
             errmsg = string.Empty;
             RollbackDal rbdn = new RollbackDal();
-            string strRB = rbdn.LockDNtoShipmentIDBySP(shipmentid,  out errmsg);
+            string strRB = rbdn.LockDNtoShipmentIDBySP(shipmentid, out errmsg);
 
             if (strRB.Contains("NG"))
             {
@@ -192,12 +192,12 @@ namespace RollbackDN
 
         }
 
-       
+
 
         public DataTable GetZCDNListDataTable(string strStartTime, string strEndTime)
         {
             RollbackDal DNDal = new RollbackDal();
-            DataSet dataSet = DNDal.GetZCDNListBySQL( strStartTime,  strEndTime);
+            DataSet dataSet = DNDal.GetZCDNListBySQL(strStartTime, strEndTime);
             if (dataSet == null || dataSet.Tables[0].Rows.Count <= 0)
             {
                 return null;
@@ -207,9 +207,9 @@ namespace RollbackDN
                 return dataSet.Tables[0];
             }
         }
-        
 
-          public DataTable GetZCSIDListDataTable(string strStartTime, string strEndTime)
+
+        public DataTable GetZCSIDListDataTable(string strStartTime, string strEndTime)
         {
             RollbackDal DNDal = new RollbackDal();
             DataSet dataSet = DNDal.GetZCSIDListBySQL(strStartTime, strEndTime);
@@ -229,7 +229,7 @@ namespace RollbackDN
 
             //RetMsg = string.Empty;
             RollbackDal rb = new RollbackDal();
-            string strRBSN = rb.CheckDNGroupCodetoBackUPBySP(strSID, strDN, out  strGroupcode, out RetMsg);
+            string strRBSN = rb.CheckDNGroupCodetoBackUPBySP(strSID, strDN, out strGroupcode, out RetMsg);
 
             if (strRBSN.Contains("NG"))
             {
@@ -239,10 +239,10 @@ namespace RollbackDN
             return "OK";
         }
         //showNeedZCCartonList
-        public DataTable showNeedZCCartonListDataTable( string strGroupcode)
+        public DataTable showNeedZCCartonListDataTable(string strGroupcode)
         {
             RollbackDal DNDal = new RollbackDal();
-            DataSet dataSet = DNDal.showNeedZCCartonListBySQL( strGroupcode);
+            DataSet dataSet = DNDal.showNeedZCCartonListBySQL(strGroupcode);
             if (dataSet == null || dataSet.Tables[0].Rows.Count <= 0)
             {
                 return null;
@@ -267,8 +267,8 @@ namespace RollbackDN
             }
         }
 
-        
-         public DataTable showZCNoPpartPickCartonDataTable(string strGroupcode)
+
+        public DataTable showZCNoPpartPickCartonDataTable(string strGroupcode)
         {
             RollbackDal DNDal = new RollbackDal();
             DataSet dataSet = DNDal.showZCNoPpartPickCartonBySQL(strGroupcode);
@@ -282,8 +282,16 @@ namespace RollbackDN
             }
         }
 
-
-
-
+        public List<int> GetListGlobalMSN(string shipmentID)
+        {
+            var lstGlbMSN = new List<int>();
+            RollbackDal DNDal = new RollbackDal();
+            var dt = DNDal.getGlobalMSN(shipmentID);
+            if (dt.Rows.Count > 0)
+            {
+                lstGlbMSN = dt.AsEnumerable().Select(x => int.Parse(x["globalmsn"].ToString())).ToList();
+            }
+            return lstGlbMSN;
+        }
     }
 }
