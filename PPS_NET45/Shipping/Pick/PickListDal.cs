@@ -582,7 +582,7 @@ WHERE a.CARTON_NO='{0}'
                                         (SELECT DISTINCT TOI.MPN
                                        FROM PPSUSER.T_ORDER_INFO TOI
                                       WHERE TOI.DELIVERY_NO = T9U.DELIVERYNO
-                                        and toi.ictpn in (select distinct tss.part_no from PPSUSER.T_SN_STATUS tss where tss.CARTON_NO= 'H1DYG03YLL1S' and rownum = 1) ) AS AC_PN,  
+                                        and toi.ictpn in (select distinct tss.part_no from PPSUSER.T_SN_STATUS tss where tss.CARTON_NO= '{0}' and rownum = 1) ) AS AC_PN,  
                                         (select count(tss_.serial_number)
                                            from ppsuser.t_sn_status tss_
                                           where tss_.carton_no = '{0}') as perCartonQty,
@@ -740,24 +740,30 @@ WHERE a.CARTON_NO='{0}'
                             t9u.SERVICELEVELID,
                             (select coo from PPSUSER.T_SN_STATUS where CARTON_NO='{0}' and rownum=1) OriginCountry, 
                             (SELECT distinct   tsi.hawb
-                              FROM ppsuser.t_shipment_info tsi
-                             where 
-                                tsi.shipment_id in
+                              FROM PPSUSER.t_Order_Info    toi,
+                                   ppsuser.t_allo_trackingno tat,
+                                   ppsuser.t_shipment_info tsi
+                             where toi.delivery_no = tat.delivery_no
+                               and tsi.shipment_id = toi.shipment_id
+                               and toi.shipment_id in
                                    (SELECT DISTINCT TSSA.SHIPMENT_ID
-                                      FROM PPSUSER.t_allo_trackingno  TAT, PPSUSER.T_SHIPMENT_SAWB TSSA
+                                      FROM PPSUSER.t_allo_trackingno TAT, PPSUSER.T_SHIPMENT_SAWB TSSA
                                      WHERE TAT.SHIPMENT_ID = TSSA.SAWB_SHIPMENT_ID
                                        AND TAT.CARTON_NO = '{0}')
+                               and tat.carton_no = '{0}'
                                ) AS HAWB,
                                    (SELECT distinct   tsi.shipment_tracking
-                                  FROM ppsuser.t_shipment_info tsi,
-                                       PPSUSER.t_allo_trackingno tat
-                                 where tsi.shipment_id = tsi.shipment_id
-                                    and tsi.shipment_id in
+                                  FROM PPSUSER.t_Order_Info    toi,
+                                       ppsuser.t_allo_trackingno  tat,
+                                       ppsuser.t_shipment_info tsi
+                                 where toi.delivery_no = tat.delivery_no
+                                   and tsi.shipment_id = toi.shipment_id
+                                   and toi.shipment_id in
                                        (SELECT DISTINCT TSSA.SHIPMENT_ID
-                                      FROM PPSUSER.t_allo_trackingno  TAT, PPSUSER.T_SHIPMENT_SAWB TSSA
-                                     WHERE TAT.SHIPMENT_ID = TSSA.SAWB_SHIPMENT_ID
-                                       AND TAT.CARTON_NO = '{0}')
-                                       and tat.carton_no = '{0}'
+                                          FROM PPSUSER.t_allo_trackingno TAT, PPSUSER.T_SHIPMENT_SAWB TSSA
+                                         WHERE TAT.SHIPMENT_ID = TSSA.SAWB_SHIPMENT_ID
+                                           AND TAT.CARTON_NO = '{0}')
+                                   and tat.carton_no = '{0}'
                                   ) AS SHIPMENTREACKING,
                                     tat.tracking_no,
                                     to_char(tsi.shipping_time, 'yyyy/MM/dd') SHIPDATE,
