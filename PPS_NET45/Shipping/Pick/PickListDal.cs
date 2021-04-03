@@ -484,7 +484,7 @@ WHERE a.CARTON_NO='{0}'
                                               WHERE substr(TSS.pick_pallet_no,3) = TSP.PALLET_NO
                                                 AND TSS.CARTON_NO = '{0}') T
                                       where OPP.PART = T.PART_NO
-                                        AND OPP.SUBPACKCODE = T.PACK_CODE) as WEIGHT_UNIT,
+                                         AND (OPP.SUBPACKCODE = T.PACK_CODE OR T.PACK_CODE = OPP.PACKCODE )) as WEIGHT_UNIT,
                                         (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
                                        from ppsuser.vw_mpn_info P_VMI,
                                             (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
@@ -573,7 +573,7 @@ WHERE a.CARTON_NO='{0}'
                                                   AND TSS.CARTON_NO = '{0}') T
                                         where P_VMI.ICTPARTNO = T.PART_NO
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as packSize,
-                                        ttl.tracking_no SSCC,
+                                        (select ttl.tracking_no from ppsuser.t_tracking_no_log ttl where ttl.carton_no = '{0}' ) SSCC,
                                         tat.delivery_no,
                                         t9u.custsono,
                                         t9u.custpono,
@@ -594,18 +594,16 @@ WHERE a.CARTON_NO='{0}'
                                         DECODE(SUBSTR(t9u.custshipinst, 1, 5),
                                                'ACDES',
                                                substr(t9u.custshipinst, 5),
-                                               t9u.custshipinst),
+                                               t9u.custshipinst) custshipinst,
                                         '' as HAWB_,
                                        (select distinct substr(pick_pallet_no,-4)from ppsuser.t_sn_status tss where tss.carton_no = '{0}')as PALLET_ID,
                                         '' as CARTON_ID
                           from ppsuser.t_shipment_info tsi,
                                ppsuser.t_allo_trackingno tat,
-                               ppsuser.t_tracking_no_log ttl,
                                ppsuser.t_940_unicode   t9u
                          where tsi.shipment_id = tat.shipment_id
                            and tat.delivery_no = t9u.deliveryno
                            and tat.line_item = trim(t9u.custdelitem)
-                           and tat.carton_no = ttl.carton_no 
                            and tat.carton_no = '{0}'";
             #region
             /*string handleSql = @" select distinct tsi.hawb,
@@ -720,7 +718,7 @@ WHERE a.CARTON_NO='{0}'
                                               WHERE substr(TSS.pick_pallet_no,3) = TSP.PALLET_NO
                                                 AND TSS.CARTON_NO = '{0}') T
                                       where OPP.PART = T.PART_NO
-                                        AND OPP.SUBPACKCODE = T.PACK_CODE) as WEIGHT_UNIT,
+                                        AND (OPP.SUBPACKCODE = T.PACK_CODE OR T.PACK_CODE = OPP.PACKCODE )) as WEIGHT_UNIT,
                              (select sum(GROSSWEIGHTKG * t.CARTON_QTY) total_DN
                                        from ppsuser.vw_mpn_info P_VMI,
                                             (SELECT DISTINCT tpo.ictpn, TSP.PACK_CODE,  tot.CARTON_QTY
@@ -835,7 +833,7 @@ WHERE a.CARTON_NO='{0}'
                                                 AND TSS.CARTON_NO = '{0}') T
                                       where P_VMI.ICTPARTNO = T.PART_NO
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as packSize,
-                                    ttl.tracking_no SSCC,
+                                    (select ttl.tracking_no from ppsuser.t_tracking_no_log ttl where ttl.carton_no = '{0}' ) SSCC,
                                     tat.delivery_no,
                                     t9u.custsono,
                                     t9u.custpono,
@@ -860,7 +858,7 @@ WHERE a.CARTON_NO='{0}'
                                            substr(t9u.custshipinst, 8),
                                            t9u.custshipinst) custshipinst,
                                     '' as HAWB_,
-                                    (select distinct substr( substr(pick_pallet_no,3),-4)from ppsuser.t_sn_status tss where tss.carton_no = '{0}')as PALLET_ID,
+                                    (select distinct substr( tss.pick_pallet_no,-4) from ppsuser.t_sn_status tss where tss.carton_no = '{0}')as PALLET_ID,
                                     '' as CARTON_ID,
                                     tsi.shipment_tracking,
                                     tsi.hawb as SAWB,
@@ -868,12 +866,10 @@ WHERE a.CARTON_NO='{0}'
                                     tsi.poe
                       from ppsuser.t_shipment_info tsi,
                            ppsuser.t_allo_trackingno tat,
-                           ppsuser.t_tracking_no_log ttl,
                            ppsuser.t_940_unicode t9u
                      where tsi.shipment_id = tat.shipment_id
                        and tat.delivery_no = t9u.deliveryno
                        and tat.line_item = trim(t9u.custdelitem)
-                       and tat.carton_no = ttl.carton_no
                        and tat.carton_no = '{0}'";
             }
             string sql = string.Format(handleSql, cartonNo, instruction);
