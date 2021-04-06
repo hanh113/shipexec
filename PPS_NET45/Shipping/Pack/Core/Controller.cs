@@ -106,23 +106,24 @@ namespace Packingparcel.Core
                     {
                         #region 从DB中拉取标签数据列印
                         string labeldata = ClientUtils.ExecuteSQL(string.Format(@"select rawdata from ppsuser.t_ups_rawdata a where a.carton_no='{0}' ", cartonNo)).Tables[0].Rows[0][0].ToString();
-                        System.IO.FileStream fs = new System.IO.FileStream(upsBackUpTotalPath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
-
-                        byte[] data = Convert.FromBase64String(labeldata);
-                        string ZPLString = Encoding.UTF8.GetString(data);
-
-                        if (string.IsNullOrEmpty(fMain.Printer))
+                        using (var stream = new System.IO.FileStream(upsBackUpTotalPath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
                         {
-                            fMain.Printer = this.GetUPSPrinter();
-                        }
+                            byte[] data = Convert.FromBase64String(labeldata);
+                            string ZPLString = Encoding.UTF8.GetString(data);
 
-                        if (!string.IsNullOrEmpty(fMain.Printer))
-                        {
-                            RawPrinterHelper.SendStringToPrinter(fMain.Printer, ZPLString);
-                        }
-                        else
-                        {
-                            exeRes.Status = false; exeRes.Message = "UPS Carrier Label 未指定打印机";
+                            if (string.IsNullOrEmpty(fMain.Printer))
+                            {
+                                fMain.Printer = this.GetUPSPrinter();
+                            }
+
+                            if (!string.IsNullOrEmpty(fMain.Printer))
+                            {
+                                RawPrinterHelper.SendStringToPrinter(fMain.Printer, ZPLString);
+                            }
+                            else
+                            {
+                                exeRes.Status = false; exeRes.Message = "UPS Carrier Label 未指定打印机";
+                            }
                         }
                     }
                     else
@@ -4078,7 +4079,7 @@ namespace Packingparcel.Core
         }
         public string GetUPSPrinter()
         {
-            string printerName = "";
+            string printerName = null;
             try
             {
                 DataSet dataSet = new DataSet();
@@ -4090,8 +4091,12 @@ namespace Packingparcel.Core
                     printer.ShowDialog();
                 }
             }
-            catch{}
-            return printerName;
+            catch
+            {
+                Printer printer = new Printer();
+                printer.ShowDialog();
+            }
+            return printerName ?? fMain.Printer;
         }
     }
 }
