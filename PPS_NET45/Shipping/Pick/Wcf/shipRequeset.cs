@@ -211,6 +211,8 @@ namespace PickList.Wcf
         public string MiscReference10 { get; set; } //all gross weight of DN
         public string MiscReference11 { get; set; } //carton of DN
         public string MiscReference12 { get; set; } //all carton of DN
+        public string MiscReference14 { get; set; } //SAWB
+        public string MiscReference15 { get; set; } //HAWB
         /// <summary>
         /// tracking no
         /// </summary>

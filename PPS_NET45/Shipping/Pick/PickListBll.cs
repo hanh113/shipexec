@@ -424,6 +424,8 @@ namespace PickList
                     MiscReference10 = dt.Rows[0]["TOTAL_WEIGHT"].ToString() + " KG",//固定是KG
                     MiscReference11 = dt.Rows[0]["CARTON_SEQUNECE"].ToString(),
                     MiscReference12 = dt.Rows[0]["CARTON_COUNT"].ToString(),
+                    MiscReference14 = dt.Rows[0]["SAWB"].ToString(),
+                    MiscReference15 = dt.Rows[0]["HAWB"].ToString(),
                     TrackingNumber = dt.Rows[0]["TRACKING_NO"].ToString(),
                     Weight = new Weight
                     {
