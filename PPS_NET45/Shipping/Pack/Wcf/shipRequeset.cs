@@ -74,14 +74,16 @@ namespace Packingparcel.Wcf
     public class PackageDefaults
     {
         public Service Service { get; set; }
-        public string CarrierInstructions { get => "Lithium Ion Batteries in Compliance with PI967 Section II"; }
-        public string CommercialInvoiceMethod { get => "1"; }//新增
+
+        public string CommercialInvoiceMethod { get => "1"; }
         public Consignee Consignee { get; set; }
 
+        //public string WorldEaseFlag { set; get; }
         //待取消-------------------------------------------------
-        public ImporterOfRecord ImporterOfRecord { get; set; }
-        public ReturnAddress ReturnAddress { get; set; }
-        public ThirdPartyBillingAddress ThirdPartyBillingAddress { get; set; }
+        //comment by wenxing 2021-3-20
+        //public ImporterOfRecord ImporterOfRecord { get; set; }
+        //public ReturnAddress ReturnAddress { get; set; }
+        //public ThirdPartyBillingAddress ThirdPartyBillingAddress { get; set; }
         //待取消-------------------------------------------------
         /// <summary>
         /// 项目
@@ -90,7 +92,7 @@ namespace Packingparcel.Wcf
         /// <summary>
         /// 第三方账单
         /// </summary>
-        public string ThirdPartyBilling { get; set; }
+        //public string ThirdPartyBilling { get; set; }
         /// <summary>
         /// 打包
         /// </summary>
@@ -117,7 +119,7 @@ namespace Packingparcel.Wcf
         /// <summary>
         /// 苹果服务等级
         /// </summary>
-        public string Symbol { get => "CONNECTSHIP_UPS.UPS.EPD"; }
+        public string Symbol { get; set; }
     }
     /// <summary>
     /// 收货人信息
@@ -185,6 +187,7 @@ namespace Packingparcel.Wcf
         /// 产品描述
         /// </summary>
         public string Description { get; set; }
+        public string CarrierInstructions { get => "Lithium Ion Batteries in Compliance with PI967 Section II"; }
         public CommodityContents[] CommodityContents { get; set; }
         //  public Dimensions Dimensions { get; set; }
         /// <summary>
@@ -199,6 +202,17 @@ namespace Packingparcel.Wcf
         /// 其他参考3:SAWB
         /// </summary>
         public string MiscReference3 { get; set; }
+        public string MiscReference4 { get; set; }
+        public string MiscReference5 { get; set; }
+        public string MiscReference6 { get; set; }
+        public string MiscReference7 { get; set; }
+        public string MiscReference8 { get; set; }
+        //public string MiscReference9 { get; set; } //always is empty???
+        public string MiscReference10 { get; set; } //all gross weight of DN
+        public string MiscReference11 { get; set; } //carton of DN
+        public string MiscReference12 { get; set; } //all carton of DN
+        public string MiscReference14 { get; set; } //SAWB
+        public string MiscReference15 { get; set; } //HAWB
         /// <summary>
         /// tracking no
         /// </summary>
@@ -290,7 +304,7 @@ namespace Packingparcel.Wcf
         /// <summary>
         /// 单位
         /// </summary>
-        public Int64 Unit { get; set; }
+        public string Unit { get; set; }
     }
     /// <summary>
     /// 重量

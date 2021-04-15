@@ -90,16 +90,17 @@ namespace Packingparcel.Core
                     }
                     else
                     {
-                        //#region UPS新交互方式 请求wcf 获取label data
-                        //UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
-                        //ShipRequestModel shipRequest = new ShipRequestModel();
-                        //exeRes = getRequestData(cartonNo, shipmentInfo.Region, out shipRequest);
-                        //if (!exeRes.Status)
-                        //{
-                        //    return exeRes;
-                        //}
-                        //Result = UpsService.Ship(JsonConvert.SerializeObject(shipRequest));
-                        //#endregion
+                        #region UPS新交互方式 请求wcf 获取label data
+                        UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
+                        ShipRequestModel shipRequest = new ShipRequestModel();
+                        //exeRes = getRequestData(cartonNo, shipmentInfo.Region, out shipRequest);getRequestShipexec
+                        exeRes = getRequestShipexec(cartonNo, shipmentInfo.Region, out shipRequest);
+                        if (!exeRes.Status)
+                        {
+                            return exeRes;
+                        }
+                        Result = UpsService.Ship(JsonConvert.SerializeObject(shipRequest));
+                        #endregion
                     }
 
                     if (!Result.StartsWith("NG"))//交互结果成功
@@ -502,40 +503,40 @@ namespace Packingparcel.Core
                         StateProvince = dt.Rows[0]["REGIONDESC"].ToString().Contains("=") ? dt.Rows[0]["REGIONDESC"].ToString().Split('=')[0] : dt.Rows[0]["REGIONDESC"].ToString()
                     },
                     #region 待取消--测试时使用写死测试数据  UNKNOW
-                    ImporterOfRecord = new ImporterOfRecord
-                    {
-                        Account = "X3332V",
-                        Address1 = "1 Infinite Loop 3-IE",
-                        City = "Cupertino",
-                        Company = "Apple Computer Inc",
-                        Contact = "c/o Customs Clearance",
-                        Country = "US",
-                        PostalCode = "95014",
-                        StateProvince = "CA",
-                        TaxId = "94-240411000"
-                    },
-                    ReturnAddress = new ReturnAddress
-                    {
-                        Address1 = "558 ALD BLVD",
-                        City = "Mt. Juliet",
-                        Company = "A.I.",
-                        Country = "US",
-                        PostalCode = "37122",
-                        StateProvince = "TN"
-                    },
-                    ThirdPartyBilling = "1",
-                    ThirdPartyBillingAddress = new ThirdPartyBillingAddress
-                    {
-                        Account = "100Y00",
-                        Address1 = "5505 W Parmer Lane, Bldg 4",
-                        Address2 = "MS:186-LPM",
-                        City = "Austin",
-                        Company = "APPLE",
-                        Contact = "C/O Freight Payment",
-                        Country = "US",
-                        PostalCode = "78727-4021",
-                        StateProvince = "TX"
-                    },
+                    //ImporterOfRecord = new ImporterOfRecord
+                    //{
+                    //    Account = "X3332V",
+                    //    Address1 = "1 Infinite Loop 3-IE",
+                    //    City = "Cupertino",
+                    //    Company = "Apple Computer Inc",
+                    //    Contact = "c/o Customs Clearance",
+                    //    Country = "US",
+                    //    PostalCode = "95014",
+                    //    StateProvince = "CA",
+                    //    TaxId = "94-240411000"
+                    //},
+                    //ReturnAddress = new ReturnAddress
+                    //{
+                    //    Address1 = "558 ALD BLVD",
+                    //    City = "Mt. Juliet",
+                    //    Company = "A.I.",
+                    //    Country = "US",
+                    //    PostalCode = "37122",
+                    //    StateProvince = "TN"
+                    //},
+                    //ThirdPartyBilling = "1",
+                    //ThirdPartyBillingAddress = new ThirdPartyBillingAddress
+                    //{
+                    //    Account = "100Y00",
+                    //    Address1 = "5505 W Parmer Lane, Bldg 4",
+                    //    Address2 = "MS:186-LPM",
+                    //    City = "Austin",
+                    //    Company = "APPLE",
+                    //    Contact = "C/O Freight Payment",
+                    //    Country = "US",
+                    //    PostalCode = "78727-4021",
+                    //    StateProvince = "TX"
+                    //},
                     #endregion
                     Shipdate = new Shipdate // SHIP TIME 
                     {
@@ -4098,5 +4099,145 @@ namespace Packingparcel.Core
             }
             return printerName ?? fMain.Printer;
         }
+        public ExecuteResult getRequestShipexec(string cartonNo, string region, out ShipRequestModel shipRequest)
+        {
+            ExecuteResult exeRes = new ExecuteResult();
+            DataTable dt = new DataTable();
+            shipRequest = new ShipRequestModel();
+            //仿照原本获取transinfile 查询逻辑 修改个别字段后查询sql
+            //dt = selectData.getUpsInfoByCartonNo(cartonNo, region);
+            dt = selectData.getShipexecInfoByCartonNo(cartonNo, region); 
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                PackageDefaults packageDefaults = new PackageDefaults
+                {
+                    Service = new Service()
+                    {
+                        Symbol = dt.Rows[0]["SERVICELEVELID"].ToString()
+                    },
+                    Consignee = new Consignee //收件人
+                    {
+                        Address1 = dt.Rows[0]["ST_ADDR1"].ToString(),
+                        City = dt.Rows[0]["SHIPTOCITY"].ToString(),
+                        Company = dt.Rows[0]["SHIPTOCOMPANY"].ToString(),
+                        Contact = dt.Rows[0]["SHIPTONAME"].ToString(),
+                        Country = dt.Rows[0]["SHIPCNTYCODE"].ToString(),
+                        Phone = dt.Rows[0]["SHIPTOCONTTEL"].ToString(),
+                        PostalCode = dt.Rows[0]["SHIPTOZIP"].ToString(),
+                        //RegionDesc  如果有 = 号码, 那么取 = 号之前的
+                        StateProvince = dt.Rows[0]["REGIONDESC"].ToString().Contains("=") ? dt.Rows[0]["REGIONDESC"].ToString().Split('=')[0] : dt.Rows[0]["REGIONDESC"].ToString()
+                    },
+                    #region 待取消--测试时使用写死测试数据  UNKNOW
+                    //comment by wenxing 2021-3-20
+                    //ImporterOfRecord = new ImporterOfRecord
+                    //{
+                    //    Account = "X3332V",
+                    //    Address1 = "1 Infinite Loop 3-IE",
+                    //    City = "Cupertino",
+                    //    Company = "Apple Computer Inc",
+                    //    Contact = "c/o Customs Clearance",
+                    //    Country = "US",
+                    //    PostalCode = "95014",
+                    //    StateProvince = "CA",
+                    //    TaxId = "94-240411000"
+                    //},
+                    //ReturnAddress = new ReturnAddress
+                    //{
+                    //    Address1 = "558 ALD BLVD",
+                    //    City = "Mt. Juliet",
+                    //    Company = "A.I.",
+                    //    Country = "US",
+                    //    PostalCode = "37122",
+                    //    StateProvince = "TN"
+                    //},
+                    //ThirdPartyBilling = "1",
+                    //ThirdPartyBillingAddress = new ThirdPartyBillingAddress
+                    //{
+                    //    Account = "100Y00",
+                    //    Address1 = "5505 W Parmer Lane, Bldg 4",
+                    //    Address2 = "MS:186-LPM",
+                    //    City = "Austin",
+                    //    Company = "APPLE",
+                    //    Contact = "C/O Freight Payment",
+                    //    Country = "US",
+                    //    PostalCode = "78727-4021",
+                    //    StateProvince = "TX"
+                    //},
+                    #endregion
+                    Shipdate = new Shipdate // SHIP TIME 
+                    {
+                        Year = dt.Rows[0]["SHIPDATE"].ToString().Split('/')[0],
+                        Month = dt.Rows[0]["SHIPDATE"].ToString().Split('/')[1],
+                        Day = dt.Rows[0]["SHIPDATE"].ToString().Split('/')[2]
+                    },
+                    //Shipper = "AAPL_ICT_KS_TEST",// dt.Rows[0]["SHIPER_CORP_NAME"].ToString(), 报错临时写定值
+                    Shipper = "AAPL_" + dt.Rows[0]["parcelaccountnumber"].ToString(),
+                    ShipperReference = dt.Rows[0]["DELIVERY_NO"].ToString(),//DN
+                    ConsigneeReference = dt.Rows[0]["CUSTSONO"].ToString()
+                };
+                CommodityContents contents = new CommodityContents
+                {
+                    Description = "ELECTRONIC PRODUCTS",
+                    OriginCountry = dt.Rows[0]["OriginCountry"].ToString(),//COO
+                    ProductCode = dt.Rows[0]["AC_PN"].ToString(),//no 35 in transin-file
+                    Quantity = dt.Rows[0]["PERCARTONQTY"].ToString(),
+                    QuantityUnitMeasure = "PCS",
+                    UnitValue = new UnitValue
+                    {
+                        Amount = dt.Rows[0]["SHIPMENT_TOTAL_VALUE"].ToString(),//总价钱
+                        Currency = "USD"
+                    },
+                    UnitWeight = new UnitWeight
+                    {
+                        Amount = dt.Rows[0]["WEIGHT_UNIT"].ToString(),
+                        Units = "KGS"
+                    }
+                };
+                Packages packages = new Packages
+                {
+                    Description = "ACCESSORY",
+                    CommodityContents = new CommodityContents[] { contents },
+                    MiscReference1 = dt.Rows[0]["CUSTPONO"].ToString(),
+                    MiscReference2 = dt.Rows[0]["WEBORDERNO"].ToString(),
+                    MiscReference3 = dt.Rows[0]["CUSTDELITEM"].ToString(),
+                    MiscReference4 = dt.Rows[0]["AC_PN"].ToString(),
+                    MiscReference5 = dt.Rows[0]["CARTON_NO"].ToString(),
+                    MiscReference6 = dt.Rows[0]["SSCC"].ToString(),
+                    MiscReference7 = dt.Rows[0]["SHIPMENT_TRACKING"].ToString(),
+                    MiscReference8 = dt.Rows[0]["SHIPMENTREACKING"].ToString(),
+                    MiscReference10 = dt.Rows[0]["TOTAL_WEIGHT"].ToString() + " KG",//固定是KG
+                    MiscReference11 = dt.Rows[0]["CARTON_SEQUNECE"].ToString(),
+                    MiscReference12 = dt.Rows[0]["CARTON_COUNT"].ToString(),
+                    MiscReference14 = dt.Rows[0]["SAWB"].ToString(),
+                    MiscReference15 = dt.Rows[0]["HAWB"].ToString(),
+                    TrackingNumber = dt.Rows[0]["TRACKING_NO"].ToString(),
+                    Weight = new Weight
+                    {
+                        Amount = dt.Rows[0]["DN_TOTAL_WEIGHT"].ToString(),//单箱重量 no 27 in transinfile
+                        //Amount = dt.Rows[0]["TOTAL_WEIGHT"].ToString(),//total weight of DN
+                        Units = "KG"
+                    },
+                    WorldEaseCode = dt.Rows[0]["SHIPMENTREACKING"].ToString(),
+                    WorldEaseFlag = "1"
+                };
+                shipRequest = new ShipRequestModel
+                {
+                    ClientAccessCredentials = new ClientAccessCredentials(),
+                    UserContext = new UserContext(),
+                    ShipmentRequest = new ShipmentRequest
+                    {
+                        PackageDefaults = packageDefaults,
+                        Packages = new Packages[] { packages }
+                    }
+                };
+            }
+            else
+            {
+                exeRes.Status = false;
+                exeRes.Message = "未能查询到Ups信息，请联系IT-PPS!";
+            }
+            return exeRes;
+        }
+
     }
 }
