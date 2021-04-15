@@ -227,7 +227,7 @@ namespace CarrierWCF.Model
         public string MiscReference6 { get; set; }
         public string MiscReference7 { get; set; }
         public string MiscReference8 { get; set; }
-        public string MiscReference9 { get; set; }
+        //public string MiscReference9 { get; set; }
         public string MiscReference10 { get; set; } //all gross weight of DN
         public string MiscReference11 { get; set; } //carton of DN
         public string MiscReference12 { get; set; } //all carton of DN
