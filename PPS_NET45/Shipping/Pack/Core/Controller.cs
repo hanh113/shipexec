@@ -91,15 +91,29 @@ namespace Packingparcel.Core
                     else
                     {
                         #region UPS新交互方式 请求wcf 获取label data
-                        UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
-                        ShipRequestModel shipRequest = new ShipRequestModel();
-                        //exeRes = getRequestData(cartonNo, shipmentInfo.Region, out shipRequest);getRequestShipexec
-                        exeRes = getRequestShipexec(cartonNo, shipmentInfo.Region, out shipRequest);
-                        if (!exeRes.Status)
+                        string ppsURL = "";
+                        string msg = "";
+                        var res = selectData.GetDBTypeBySP("ICTSerivce_URL", out ppsURL, out msg);
+
+                        if (!String.IsNullOrWhiteSpace(ppsURL))
                         {
-                            return exeRes;
+                            CarrierWCF.Wcf.IICTToCarrierService WS = OperationWCF.HttpChannel.Get<CarrierWCF.Wcf.IICTToCarrierService>(ppsURL);
+                            //UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
+                            ShipRequestModel shipRequest = new ShipRequestModel();
+                            //exeRes = getRequestData(cartonNo, shipmentInfo.Region, out shipRequest);getRequestShipexec
+                            exeRes = getRequestShipexec(cartonNo, shipmentInfo.Region, out shipRequest);
+                            if (!exeRes.Status)
+                            {
+                                return exeRes;
+                            }
+                            Result = WS.Ship(JsonConvert.SerializeObject(shipRequest));
                         }
-                        Result = UpsService.Ship(JsonConvert.SerializeObject(shipRequest));
+                        else
+                        {
+                            exeRes.Status = false;
+                            exeRes.Message = "UPS ShipExec配置有异常，请再检查！";
+                        }
+
                         #endregion
                     }
 
@@ -194,168 +208,6 @@ namespace Packingparcel.Core
             }
             return exeRes;
         }
-        public ExecuteResult createUpsFile2(string cartonNo, ShipmentInfo shipmentInfo)
-        {
-            /*
-             * 文件路径：
-             MESCLIENT\ALL_CARRIER\UPS_CARRIER\UPS_CARRIER_BACKUP\DATENOW\SHIPMENTID\UPSCODE--自己备份
-                                              \DATENOW\UPSCODE                         --客户读取，并删除
-             */
-            ExecuteResult exeRes = new ExecuteResult();
-            string UPS_TRACKING_NO = "";
-            string upsFileContent = "";
-            string upsBackUpTotalPath = "";
-            //      string upsTotalPath = "";
-            try
-            {
-                string startPath = Application.StartupPath + @"\ALL_CARRIER\UPS_CARRIER";
-                if (!Directory.Exists(startPath))
-                {
-                    Directory.CreateDirectory(startPath);
-                }
-                string secBackUpDir = startPath + @"\UPS_CARRIER_BACKUP\" + DateTime.Now.ToString("yyyyMMdd") + @"\" + shipmentInfo.ShipmentId;//备份dir
-                if (!Directory.Exists(secBackUpDir))
-                {
-                    Directory.CreateDirectory(secBackUpDir);
-                }
-                exeRes = getUpsCodeByCartonNo(cartonNo);
-                if (!exeRes.Status)
-                {
-                    return exeRes;
-                }
-                UPS_TRACKING_NO = (string)exeRes.Anything;
-                //判断新旧UPS交互方式 Franky
-                string sql = @"select count(*) as flag from ppsuser.t_basicparameter_info where para_type='UPS_URL' and enabled='Y'";
-                if (Convert.ToInt32(ClientUtils.ExecuteSQL(sql).Tables[0].Rows[0]["flag"].ToString()) > 0)
-                {
-                    string Result = "NG";
-                    upsBackUpTotalPath = secBackUpDir + @"\" + UPS_TRACKING_NO + ".pdf";
-                    //先检查是否为补印状态：db中有之前获取到label data 有则默认为补印状态
-                    DataTable dtLabel = ClientUtils.ExecuteSQL(string.Format(@"select  count(1) from ppsuser.t_ups_packages  a ,ppsuser.t_sn_status b where  
-                                                            a.delivery_no=b.delivery_no and a.trackingnumber=b.tracking_no
-                                                            and a.sscc=b.sscc and b.carton_no='{0}' and a.labeldata is not null", cartonNo)).Tables[0];
-                    if (Convert.ToInt32(dtLabel.Rows[0][0].ToString()) > 0)
-                    //有数据则是补印状态
-                    {
-                        Result = "OK";
-                    }
-                    else
-                    {
-                        #region UPS新交互方式 请求wcf 获取label data
-                        UpsWcf.ICTToCarrierService UpsService = new UpsWcf.ICTToCarrierService();
-                        ShipRequestModel shipRequest = new ShipRequestModel();
-                        exeRes = getRequestData(cartonNo, shipmentInfo.Region, out shipRequest);
-                        if (!exeRes.Status)
-                        {
-                            return exeRes;
-                        }
-                        Result = UpsService.Ship(JsonConvert.SerializeObject(shipRequest));
-                        #endregion
-                    }
-
-                    if (!Result.StartsWith("NG"))//交互结果成功
-                    {
-                        #region 从DB中拉取标签数据列印
-                        string labeldata = ClientUtils.ExecuteSQL(string.Format(@"select  a.labeldata from ppsuser.t_ups_packages  a ,ppsuser.t_sn_status b where  
-                            a.delivery_no=b.delivery_no and a.trackingnumber=b.tracking_no
-                            and a.sscc=b.sscc and b.carton_no='{0}' and rownum=1 ", cartonNo)).Tables[0].Rows[0][0].ToString();
-                        System.IO.FileStream fs = new System.IO.FileStream(upsBackUpTotalPath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
-                        byte[] b = Convert.FromBase64String(labeldata);
-                        fs.Write(b, 0, b.Length);
-                        fs.Close();
-                        //加载PDF文档
-                        PdfDocument doc = new PdfDocument();
-                        doc.LoadFromFile(upsBackUpTotalPath);//读取文件
-
-                        //检查是否选择打印机
-                        if (string.IsNullOrEmpty(fMain.Printer))
-                        {
-                            Printer printer = new Printer();
-                            printer.ShowDialog();
-                        }
-                        if (!string.IsNullOrEmpty(fMain.Printer))
-                        {
-                            PrintDocument printDoc = doc.PrintDocument;//文件
-                            PrintController printController = new StandardPrintController();
-                            printDoc.PrintController = printController;//禁止弹窗
-                            printDoc.DefaultPageSettings.PrinterSettings.PrinterName = fMain.Printer;
-                            printDoc.PrintController = new StandardPrintController();
-                            printDoc.Print();
-                            doc.Close();
-                        }
-                        else
-                        {
-                            exeRes.Status = false; exeRes.Message = "UPS Carrier Label 未指定打印机";
-                        }
-                    }
-                    else
-                    { exeRes.Status = false; exeRes.Message = Result; }
-                    #endregion
-                }
-                else
-                {
-                    #region UPS 旧交互方式 抛转文件产生transin file
-                    exeRes = getUpsInfoByCartonNo(cartonNo, shipmentInfo.Region);
-                    if (!exeRes.Status)
-                    {
-                        return exeRes;
-                    }
-                    upsFileContent = (string)exeRes.Anything;
-                    upsBackUpTotalPath = secBackUpDir + @"\" + UPS_TRACKING_NO + ".ups";
-
-                    string ftpFlag = "N";
-                    string msg = "";
-                    string ftpFlagCheck = selectData.GetDBTypeBySP("FTP_UPS", out ftpFlag, out msg);
-                    if (ftpFlag == "Y")
-                    {
-                        string xmlMsg = String.Empty;
-                        var list = GetFilePathByCarrierFTP("UPS", out xmlMsg);
-                        if (xmlMsg.IndexOf("NG") >= 0)
-                        {
-                            exeRes.Status = false;
-                            exeRes.Message = xmlMsg;
-                            return exeRes;
-                        }
-                        else
-                            exeRes = WriteAndReadUtil.writeToByFilePathAndFileContentFTP(upsBackUpTotalPath, list, upsFileContent);
-                    }
-                    else
-                    {
-                        // upsTotalPath = secDir + @"\" + UPS_TRACKING_NO + ".ups";
-                        //add carrier multi-Net Disk by Franky 2019年11月11日 
-                        List<string> lisFilePath = this.GetFilePathByCarrier("UPS");
-                        if (lisFilePath.Count < 1)
-                        {
-                            exeRes.Status = false;
-                            exeRes.Message = "未维护货代标签地址网盘！";
-                            return exeRes;
-                        }
-                        else
-                        {
-                            for (int i = 0; i < lisFilePath.Count; i++)
-                            {
-                                lisFilePath[i] = lisFilePath[i] + @"\" + UPS_TRACKING_NO + ".ups";
-                            }
-                        }
-                        exeRes = WriteAndReadUtil.writeToByFilePathAndFileContent(upsBackUpTotalPath, lisFilePath, upsFileContent);
-                    }
-                    #endregion
-                }
-
-                if (!exeRes.Status)
-                {
-                    return exeRes;
-                }
-                exeRes.Message = "OK_UPS货代已经打印！";
-            }
-            catch (Exception e)
-            {
-                exeRes.Status = false;
-                exeRes.Message = e.Message;
-            }
-            return exeRes;
-        }
-
         public ExecuteResult createFedFile(string cartonNo, ShipmentInfo shipmentInfo)
         {
             ExecuteResult exeRes = new ExecuteResult();

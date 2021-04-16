@@ -42,7 +42,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ClientUtils">
+    <Reference Include="ClientUtils, Version=1.0.1.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\PPS_TEST\ClientUtils.dll</HintPath>
     </Reference>
     <Reference Include="LibHelper">
@@ -51,6 +52,10 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Packages\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OperationWCF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\PPS_TEST\OperationWCF.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.5.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
@@ -121,12 +126,8 @@
     <Compile Include="Utils\RawPrinterHelper.cs" />
     <Compile Include="Utils\WriteAndReadUtil.cs" />
     <Compile Include="Wcf\Credentials.cs" />
+    <Compile Include="Wcf\ICarrierToICTService.cs" />
     <Compile Include="Wcf\shipRequeset.cs" />
-    <Compile Include="Web References\UpsWcf\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="DHL_Mother.resx">
       <DependentUpon>DHL_Mother.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,14 +164,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Web References\UpsWcf\ICTToCarrierService.wsdl" />
-    <None Include="Web References\UpsWcf\ICTToCarrierService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Web References\UpsWcf\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CRReport\CRReport.csproj">
@@ -183,19 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://10.171.16.201:8091/ICTToCarrierService%3fwsdl">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\UpsWcf\</RelPath>
-      <UpdateFromURL>http://10.171.16.201:8091/ICTToCarrierService%3fwsdl</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>Packingparcel_UpsWcf_ICTToCarrierService</CachedSettingsPropName>
-    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
