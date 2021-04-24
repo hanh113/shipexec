@@ -783,15 +783,7 @@ namespace PickList
                 PickListBll pb1 = new PickListBll();
                 string msg = "";
                 if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
-                {
-                    if (!pb1.IsFinishShipExec(strPickPalletno, out msg))
-                    {
-                        DataTable cartondt = pb1.GetCartonTableBLL(strPickPalletno);
-                        string strshipment = txtSmId.Text.Trim();
-                        for (int i = 0; i < cartondt.Rows.Count; i++)
-                            pb1.CallShipExec(cartondt.Rows[i]["CARTON_NO"].ToString(), strshipment, ShipExecShow);
-                    }
-                }
+                    pb1.CallShipExecFinish(strPickPalletno, txtSmId.Text.Trim(), ShipExecShow);
                 #endregion
 
                 strF = "F";
@@ -1779,26 +1771,9 @@ namespace PickList
             //如果不为零 说明刷入过有效的序号，保留原有逻辑；
             //如果为零说明没有刷入过有效的序号， 直接结束,还原到未点 开始作业的状态， 解除电脑名。
             string strShipmentid = txtSmId.Text.Trim();
-
             string strPalletno = txtPallet.Text.Trim();
-
             string strPickpalletno = txtPick.Text.Trim();
-
             PickListBll pb1 = new PickListBll();
-            #region ups shipexec
-            string msg = "";
-            if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
-            {
-                if (!pb1.IsFinishShipExec(strPickpalletno, out msg))
-                {
-                    DataTable cartondt = pb1.GetCartonTableBLL(strPickpalletno);
-                    string strshipment = txtSmId.Text.Trim();
-                    for (int i = 0; i < cartondt.Rows.Count; i++)
-                        pb1.CallShipExec(cartondt.Rows[i]["CARTON_NO"].ToString(), strshipment, ShipExecShow);
-                }
-            }
-            #endregion
-
             if (string.IsNullOrEmpty(strPickpalletno))
             {
 
@@ -1821,6 +1796,11 @@ namespace PickList
 
                 if (ppl.PrintPickPalletLabel_new(strPickpalletno))
                 {
+                    #region ups shipexec
+                    string msg = "";
+                    if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
+                        pb1.CallShipExecFinish(strPickpalletno, txtSmId.Text.Trim(), ShipExecShow);
+                    #endregion
                     ShowMsg("打印OK", -1);
                     ClientUtils.WritePrintLabelLog("Pick Pallet Label", "", strPickpalletno, LocalHelper.getMacAddr_Local());
 

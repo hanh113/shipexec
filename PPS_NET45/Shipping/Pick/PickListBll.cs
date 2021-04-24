@@ -313,7 +313,42 @@ namespace PickList
             else
                 ShowResult("配置有异常", "UPS ShipExec配置有异常，请再检查！");
         }
+        public async void CallShipExecFinish(string pickPallet, string shipmentID, Action<string, string> ShowResult)//, out string msg
+        {
+            await System.Threading.Tasks.Task.Delay(10000);//wait for the last carton call api is finish
+            string msg = "";
+            List<string> lstCartonNo = new List<string>();
+            PickListBll pb1 = new PickListBll();
+            if (pb1.IsFinishShipExec(pickPallet, out msg))
+                return;
 
+            DataTable cartondt = pb1.GetCartonTableBLL(pickPallet);
+            string ppsURL = "";
+            var res = this.GetDBType("ICTSerivce_URL", out ppsURL, out msg);
+            if (!String.IsNullOrWhiteSpace(ppsURL))
+            {
+                foreach (var cartonNo in lstCartonNo)
+                {
+                    CarrierWCF.Wcf.IICTToCarrierService WS = OperationWCF.HttpChannel.Get<CarrierWCF.Wcf.IICTToCarrierService>(ppsURL);
+                    ShipRequestModel shipRequest = new ShipRequestModel();
+                    PickListDal PickDal = new PickListDal();
+                    string region = PickDal.GetShipmentInfo(shipmentID).Rows[0]["REGION"].ToString();
+                    var exeRes = getRequestData(cartonNo, region, out shipRequest);
+                    if (!exeRes.Status)
+                    {
+                        //send mail alert
+                        await System.Threading.Tasks.Task.Run<string>(() => WS.SendMailAlert(cartonNo, exeRes.Message));
+                        ShowResult(cartonNo, exeRes.Message);
+                        return;
+                    }
+                    res = await System.Threading.Tasks.Task.Run<string>(() => WS.Ship(JsonConvert.SerializeObject(shipRequest)));
+                    if (res != "OK")
+                        ShowResult(cartonNo, res);
+                }
+            }
+            else
+                ShowResult("配置有异常", "UPS ShipExec配置有异常，请再检查！");
+        }
 
         public ExecuteResult getRequestData(string cartonNo, string region, out ShipRequestModel shipRequest)
         {
