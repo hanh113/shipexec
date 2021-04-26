@@ -315,7 +315,7 @@ namespace PickList
         }
         public async void CallShipExecFinish(string pickPallet, string shipmentID, Action<string, string> ShowResult)//, out string msg
         {
-            await System.Threading.Tasks.Task.Delay(10000);//wait for the last carton call api is finish
+            await System.Threading.Tasks.Task.Delay(10000);//wait for the last carton call api finish
             string msg = "";
             List<string> lstCartonNo = new List<string>();
             PickListBll pb1 = new PickListBll();
