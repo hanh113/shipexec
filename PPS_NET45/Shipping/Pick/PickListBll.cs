@@ -323,6 +323,7 @@ namespace PickList
                 return;
 
             DataTable cartondt = pb1.GetCartonTableBLL(pickPallet);
+            for (var i = 0; i < cartondt.Rows.Count; i++) lstCartonNo.Add( cartondt.Rows[i]["carton_no"].ToString());
             string ppsURL = "";
             var res = this.GetDBType("ICTSerivce_URL", out ppsURL, out msg);
             if (!String.IsNullOrWhiteSpace(ppsURL))
