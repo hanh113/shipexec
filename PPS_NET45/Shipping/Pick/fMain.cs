@@ -734,7 +734,7 @@ namespace PickList
             if (!dt.Rows[0]["errmsg"].ToString().Contains("NG"))
             {
                 PickListBll pb1 = new PickListBll();
-                if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
+                if (cmbCarrier2.Text.ToUpper().Contains("UPS") && this.IsShipexecFlag)
                 {
                     string strShipmentid = txtSmId.Text.Trim();
                     pb1.CallShipExec(strCarton, strShipmentid, ShipExecShow);
@@ -782,7 +782,7 @@ namespace PickList
                 strPickPalletno = dt.Rows[0]["pickpalletno"].ToString();
                 PickListBll pb1 = new PickListBll();
                 string msg = "";
-                if (cmbCarrier2.Text == "UPS" && this.IsShipexecFlag)
+                if (cmbCarrier2.Text.ToUpper().Contains("UPS") && this.IsShipexecFlag)
                     pb1.CallShipExecFinish(strPickPalletno, txtSmId.Text.Trim(), ShipExecShow);
                 #endregion
 

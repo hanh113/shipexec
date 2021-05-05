@@ -317,13 +317,12 @@ namespace PickList
         {
             await System.Threading.Tasks.Task.Delay(10000);//wait for the last carton call api finish
             string msg = "";
-            List<string> lstCartonNo = new List<string>();
             PickListBll pb1 = new PickListBll();
             if (pb1.IsFinishShipExec(pickPallet, out msg))
                 return;
 
             DataTable cartondt = pb1.GetCartonTableBLL(pickPallet);
-            for (var i = 0; i < cartondt.Rows.Count; i++) lstCartonNo.Add( cartondt.Rows[i]["carton_no"].ToString());
+            List<string> lstCartonNo = cartondt.AsEnumerable().Select(x => x["carton_no"].ToString()).ToList();
             string ppsURL = "";
             var res = this.GetDBType("ICTSerivce_URL", out ppsURL, out msg);
             if (!String.IsNullOrWhiteSpace(ppsURL))
