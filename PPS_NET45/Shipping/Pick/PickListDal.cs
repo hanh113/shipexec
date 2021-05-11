@@ -501,12 +501,12 @@ WHERE a.CARTON_NO='{0}'
                                            ) T
                                       where P_VMI.ICTPARTNO = T.ictpn
                                         AND P_VMI.PACKCODE = T.PACK_CODE) as TOTAL_WEIGHT,
-                                        '' SHIPMENTREACKING,
+                                        '' shipment_tracking,
                                         '' SAWB,
-										t9u.SERVICELEVELID,
+										t9u.SERVICELEVEL as SERVICELEVELID,
 										(select coo from PPSUSER.T_SN_STATUS where CARTON_NO='{0}' and rownum=1) OriginCountry, 
 										tsi.hawb,
-                                        tsi.shipment_tracking,
+                                        tsi.shipment_tracking as SHIPMENTREACKING,
                                         tat.tracking_no,
                                         to_char(tsi.shipping_time, 'yyyy/MM/dd') as shipdate,
                                         t9u.parcelaccountnumber,

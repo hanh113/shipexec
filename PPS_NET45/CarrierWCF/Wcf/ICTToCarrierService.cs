@@ -370,7 +370,7 @@
                 }
                 if (exeRes.Status)
                 {
-                    rawOjb.RAWDATA = Mdel2.DocumentResponses[0].RawData[0];
+                    rawOjb.RAWDATA =System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(Mdel2.DocumentResponses[0].RawData[0])) ;
                     this.core.InsertRawData(rawOjb);
                 }
             }

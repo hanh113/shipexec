@@ -123,8 +123,8 @@ namespace Packingparcel.Core
                         string labeldata = ClientUtils.ExecuteSQL(string.Format(@"select rawdata from ppsuser.t_ups_rawdata a where a.carton_no='{0}' ", cartonNo)).Tables[0].Rows[0][0].ToString();
                         using (var stream = new System.IO.FileStream(upsBackUpTotalPath, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write))
                         {
-                            byte[] data = Convert.FromBase64String(labeldata);
-                            string ZPLString = Encoding.UTF8.GetString(data);
+                            //byte[] data = Convert.FromBase64String(labeldata);
+                            //string ZPLString = Encoding.UTF8.GetString(data);
 
                             if (string.IsNullOrEmpty(fMain.Printer))
                             {
@@ -133,7 +133,7 @@ namespace Packingparcel.Core
 
                             if (!string.IsNullOrEmpty(fMain.Printer))
                             {
-                                RawPrinterHelper.SendStringToPrinter(fMain.Printer, ZPLString);
+                                RawPrinterHelper.SendStringToPrinter(fMain.Printer, labeldata);
                             }
                             else
                             {
