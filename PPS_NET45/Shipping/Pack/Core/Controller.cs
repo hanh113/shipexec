@@ -111,7 +111,7 @@ namespace Packingparcel.Core
                         else
                         {
                             exeRes.Status = false;
-                            exeRes.Message = "UPS ShipExec配置有异常，请再检查！";
+                            exeRes.Message = "NG_UPS ShipExec配置有异常，请再检查！";
                         }
 
                         #endregion
@@ -137,12 +137,16 @@ namespace Packingparcel.Core
                             }
                             else
                             {
-                                exeRes.Status = false; exeRes.Message = "UPS Carrier Label 未指定打印机";
+                                exeRes.Status = false;
+                                exeRes.Message = "NG_UPS Carrier Label 未指定打印机";
                             }
                         }
                     }
                     else
-                    { exeRes.Status = false; exeRes.Message = Result; }
+                    {
+                        exeRes.Status = false;
+                        exeRes.Message = Result;
+                    }
                     #endregion
                 }
                 else
@@ -3958,7 +3962,7 @@ namespace Packingparcel.Core
             shipRequest = new ShipRequestModel();
             //仿照原本获取transinfile 查询逻辑 修改个别字段后查询sql
             //dt = selectData.getUpsInfoByCartonNo(cartonNo, region);
-            dt = selectData.getShipexecInfoByCartonNo(cartonNo, region); 
+            dt = selectData.getShipexecInfoByCartonNo(cartonNo, region);
             if (dt != null && dt.Rows.Count > 0)
             {
                 PackageDefaults packageDefaults = new PackageDefaults
