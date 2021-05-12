@@ -209,7 +209,7 @@
                             rawObj.CARTON_NO = model.ShipmentRequest.Packages.Where(x => x.TrackingNumber == package.TrackingNumber).FirstOrDefault().MiscReference5;
                             rawObj.TRACKING_NO = package.TrackingNumber;
                             rawObj.DELIVERY_NO = model.ShipmentRequest.PackageDefaults.ShipperReference;
-                            rawObj.RAWDATA = package.Documents[0].RawData[0];
+                            rawObj.RAWDATA = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(package.Documents[0].RawData[0]));
                             exeRes = this.core.InsertRawData(rawObj);
                         }
                     }
