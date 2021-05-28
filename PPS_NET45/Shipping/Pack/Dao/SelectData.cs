@@ -2611,20 +2611,7 @@ AND (f.SHIPCNTYCODE='HK' OR f.SHIPCNTYCODE='TW')
         public DataTable getUpsInfoByCartonNo(string cartonNo, string region)
         {
             //修改逻辑 按MODEL来显示 AMR/PAC/EMEIA都要显示
-            string instruction = "";
-            DataTable dtTemp = ClientUtils.ExecuteSQL(string.Format(@"
-SELECT DISTINCT c.HAZARDOUS 
-FROM ppsuser.T_SN_STATUS a INNER JOIN ppsuser.VW_MPN_INFO b ON a.PART_NO=b.ICTPARTNO
-INNER JOIN PPTEST.OMS_MODEL c ON b.CUSTMODEL=c.CUSTMODEL
-WHERE a.CARTON_NO='{0}'
-", cartonNo)).Tables[0];
-            if ((dtTemp != null) && (dtTemp.Rows.Count > 0))
-            {
-                if (dtTemp.Rows[0]["HAZARDOUS"].ToString().ToUpper() == "Y")
-                {
-                    instruction = "Lithium Ion Batteries in Compliance with PI966 Section II";
-                }
-            }
+            string instruction = Lithium_Batteries(cartonNo);
 
             string handleSql = @" select distinct tsi.hawb,
                                         tsi.shipment_tracking,
@@ -4014,23 +4001,32 @@ SELECT DN_NO FROM PPSUSER.T_MES_PACKINGLIST WHERE DN_NO=:DNNO "
             }
 
         }
-        public DataTable getShipexecInfoByCartonNo(string cartonNo, string region)
+        public string Lithium_Batteries(string strCarton)
         {
-            //修改逻辑 按MODEL来显示 AMR/PAC/EMEIA都要显示
             string instruction = "";
             DataTable dtTemp = ClientUtils.ExecuteSQL(string.Format(@"
-SELECT DISTINCT c.HAZARDOUS 
+SELECT DISTINCT c.HAZARDOUS ,PI9X
 FROM ppsuser.T_SN_STATUS a INNER JOIN ppsuser.VW_MPN_INFO b ON a.PART_NO=b.ICTPARTNO
 INNER JOIN PPTEST.OMS_MODEL c ON b.CUSTMODEL=c.CUSTMODEL
 WHERE a.CARTON_NO='{0}'
-", cartonNo)).Tables[0];
+", strCarton)).Tables[0];
             if ((dtTemp != null) && (dtTemp.Rows.Count > 0))
             {
                 if (dtTemp.Rows[0]["HAZARDOUS"].ToString().ToUpper() == "Y")
                 {
-                    instruction = "Lithium Ion Batteries in Compliance with PI966 Section II";
+                    //    instruction = "Lithium Ion Batteries in Compliance with PI966 Section II";
+                    //}
+                    //if (dtTemp.Rows[0]["PI9X"].ToString().ToUpper() == "Y")
+                    //{
+                    instruction = dtTemp.Rows[0]["PI9X"].ToString();
                 }
             }
+            return instruction;
+        }
+        public DataTable getShipexecInfoByCartonNo(string cartonNo, string region)
+        {
+            //修改逻辑 按MODEL来显示 AMR/PAC/EMEIA都要显示
+            string instruction = Lithium_Batteries(cartonNo);
             string handleSql = @" select distinct (select FGWEIGHTKGP
                                        from pptest.oms_partmapping OPP,
                                             (SELECT DISTINCT TSS.PART_NO, TSP.PACK_CODE

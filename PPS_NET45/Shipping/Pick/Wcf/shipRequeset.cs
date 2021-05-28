@@ -187,7 +187,8 @@ namespace PickList.Wcf
         /// 产品描述
         /// </summary>
         public string Description { get; set; }
-        public string CarrierInstructions { get => "Lithium Ion Batteries in Compliance with PI967 Section II"; }
+        public string CarrierInstructions { get; set; }
+        //public string CarrierInstructions { get => "Lithium Ion Batteries in Compliance with PI967 Section II"; }
         public CommodityContents[] CommodityContents { get; set; }
         //  public Dimensions Dimensions { get; set; }
         /// <summary>
