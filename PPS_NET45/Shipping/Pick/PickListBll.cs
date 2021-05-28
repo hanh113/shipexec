@@ -446,6 +446,7 @@ namespace PickList
                 };
                 Packages packages = new Packages
                 {
+                    CarrierInstructions = dt.Rows[0]["Delivery_Instruction"].ToString(),
                     Description = "ACCESSORY",
                     CommodityContents = new CommodityContents[] { contents },
                     MiscReference1 = dt.Rows[0]["CUSTPONO"].ToString(),
