@@ -22,7 +22,8 @@ namespace RollbackDN.UPSCancel
             string sql = @"select * from t_shipment_info"
                            + "    where shipment_type='DS' " +
                            "and type='PARCEL' and carrier_name like '%UPS%' "
-                           + " and shipment_id=:shipment_id";
+                           //+ " and shipment_id=:shipment_id";
+                           + " and SHIPMENT_ID in (select DISTINCT SHIPMENT_ID from PPSUSER.T_SHIPMENT_PALLET where SHIPMENT_ID=:shipment_id and PICK_CARTON>0) ";//已经pick才要call void api
             object[][] para = new object[1][];
             para[0] = new object[] { ParameterDirection.Input, OracleDbType.Varchar2, "shipment_id", shipmentId };
             DataTable dt = new DataTable();
