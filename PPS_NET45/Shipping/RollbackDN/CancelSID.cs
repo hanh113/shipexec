@@ -128,13 +128,28 @@ namespace RollbackDN
             //string checkEnable = "";
             CheckUPS_shipment chk = new CheckUPS_shipment();
             checkUPSshipment = chk.UPSCheck(strSID);
-            var upsShipExecFlag = chk.CheckUPSEnable();
-            var lstGlobalMSN = new List<int>();
-            if (upsShipExecFlag)
-                lstGlobalMSN = pb.GetListGlobalMSN(strSID);
 
             string strResult = string.Empty;
             string strResulterrmsg = string.Empty;
+            string upsMSG = string.Empty;
+
+            if (checkUPSshipment.Equals("OK"))
+            {
+                if (chk.CheckUPSEnable())
+                {
+                    var lstGlobalMSN = pb.GetListGlobalMSN(strSID);
+                    sendUPSCancel = chk.SendShipmentCancel(lstGlobalMSN);
+                    if (sendUPSCancel.Equals("OK"))
+                        upsMSG = "-UPS cancel OK";
+                    else
+                    {
+                        ShowMsg("UPS cancel NG " + sendUPSCancel, 0);
+                        btnRollback.Enabled = true;
+                        return;
+                    }
+                }
+            }
+
             strResult = pb.RBShipmentID2(strSID, out strResulterrmsg);
             if (strResult.Equals("NG"))
             {
@@ -167,38 +182,7 @@ namespace RollbackDN
                         }
                     }
                 }
-
-                if (checkUPSshipment.Equals("OK"))
-                {
-                    // checkEnable = chk.CheckUPSEnable();
-                    if (upsShipExecFlag)
-                    {
-                        sendUPSCancel = chk.SendShipmentCancel(lstGlobalMSN);
-                        if (sendUPSCancel.Equals("OK"))
-                        {
-                            strResult += "-Cancel Finished and Sent cancel request to Sever OK";
-                            //ShowMsg("Cancel Finished and Sent cancel request to Sever OK", -1);
-                        }
-                        else
-                            strResult += "-" + sendUPSCancel;
-                    }
-                    //else if(checkEnable.Equals("N"))
-                    //{
-                    //    msg = "Cancel Finished, but Enabled=N cannot send cancel info";
-                    //    //ShowMsg("Cancel Finished, but Enabled=N cannot send cancel info", -1);
-                    //}
-                    //else
-                    //{
-                    //    msg = checkEnable;
-                    //    //ShowMsg(checkEnable, -1);
-                    //}
-                }
-                //else
-                //{
-                //    msg = "Cancel Finished, but " + sendUPSCancel;
-                //    //ShowMsg("Cancel Finished, but " + sendUPSCancel, 1);
-                //}
-                ShowMsg(strResult, -1);
+                ShowMsg("取消成功" + upsMSG, -1);
             }
             btnRollback.Enabled = true;
         }

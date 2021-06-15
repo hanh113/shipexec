@@ -42,6 +42,25 @@ namespace RollbackDN
 
             RollbackBll rb = new RollbackBll();
             string errorMessage = string.Empty;
+            string sendUPSCancel = string.Empty;
+            CheckUPS_shipment chk = new CheckUPS_shipment();
+            string checkUPSshipment = chk.UPSCheck(strShipmentid);
+            if (checkUPSshipment.Equals("OK"))
+            {
+                if (chk.CheckUPSEnable())
+                {
+                    sendUPSCancel = chk.SendShipmentCancel(strShipmentid);
+                    if (sendUPSCancel.Equals("OK"))
+                        msg = "Sent cancel request to Sever OK";
+                    else
+                    {
+                        ShowMsg("UPS cancel NG " + sendUPSCancel, 0);
+                        btnRollback.Enabled = true;
+                        return;
+                    }
+                }
+            }
+
             string strResult = rb.RBShipmentID(strShipmentid, out errorMessage);
             if (!strResult.Equals("OK"))
             {
@@ -49,41 +68,7 @@ namespace RollbackDN
                 btnRollback.Enabled = true;
                 return;
             }
-            string checkUPSshipment = string.Empty;
-            string sendUPSCancel = string.Empty;
-          //  string checkEnable = "";
-            CheckUPS_shipment chk = new CheckUPS_shipment();
-            checkUPSshipment = chk.UPSCheck(strShipmentid);
-            if (checkUPSshipment.Equals("OK"))
-            {
-                // checkEnable = chk.CheckUPSEnable();
-                if (chk.CheckUPSEnable())
-                {
-                    sendUPSCancel = chk.SendShipmentCancel(strShipmentid);
-                    if (sendUPSCancel.Equals("OK"))
-                    {
-                        msg = "Sent cancel request to Sever OK";
-                        //ShowMsg("Cancel Finished and Sent cancel request to Sever OK", -1);
-                    }
-                }
-                //else if (checkEnable.Equals("N"))
-                //{
-                //    msg = "Enabled=N cannot send cancel request to Server";
-                //    //ShowMsg("Cancel Finished, but Enabled=N cannot send cancel info", -1);
-                //}
-                //else
-                //{
-                //    msg = checkEnable;
-                //    //ShowMsg(checkEnable, -1);
-                //}
-            }
-            //else
-            //{
-            //    msg = sendUPSCancel;
-            //    //ShowMsg("Cancel Finished, but " + sendUPSCancel, 1);
-            //}
             ShowMsg("还原完成  " + msg, -1);
-            //ShowMsg("还原完成", -1);
             btnRollback.Enabled = true;
         }
         private void initComboBox()
