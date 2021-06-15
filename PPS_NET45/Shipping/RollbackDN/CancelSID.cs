@@ -137,8 +137,7 @@ namespace RollbackDN
             {
                 if (chk.CheckUPSEnable())
                 {
-                    var lstGlobalMSN = pb.GetListGlobalMSN(strSID);
-                    sendUPSCancel = chk.SendShipmentCancel(lstGlobalMSN);
+                    sendUPSCancel = chk.SendShipmentCancel(strSID);
                     if (sendUPSCancel.Equals("OK"))
                         upsMSG = "-UPS cancel OK";
                     else
